@@ -81,4 +81,10 @@
 - :sp <path_to_file>    : **S**plit **p**ane horizontally and set the recent opened pane active
 - c-ww                  : Ctrl+ww navigate through all the opened pane/**W**indow
 - c-wo                  : Close **O**ther panes
-- :o < file >           : Open file
+- c-wq                  : **q**uit window
+- c-wv                   : Create new vertical window/pane with of the current file
+- c-wh                  : Create new horizontal window/pane with of the current file
+- :o < file >           : **O**pen file
+- :e < file >           : Open/**E**xplore File (Open file in buffer)
+- :bn                   : Switch to **n**ext **b**uffer
+- :bp                  : Switch to **p**revious **b**uffer
