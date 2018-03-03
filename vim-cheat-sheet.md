@@ -1,10 +1,22 @@
 
 ## NAVIAGTION
 - h, l , j, k : navigate Left, Right, Down, Up respectively
-- w, b :
-- { , }
-- gg
-- G
+- e : to end of word
+- E : to end of word (word can contains punctuation)
+- w : to beginning of next word
+- W : toward next word (word can contains punctuation)
+- b : to beginning of current word
+- B : to beginning of current work (word can contains punctuation)
+- H : to Top of visible screen
+- ^ : jump to beginning of non-blank character of the line
+- g_ : jump to end of non-blank character of the line
+- { , } : Jump Paragraph Above, Below respectively
+- gg  : go to the TOP of file
+- G   : go to the Bottom of file
+- % : move to match character such as (, [, {,  
+- f< Any character > : go to first match of specific character given
+- /< any string> : find the next matching string
+- . : repeated previous action
 
 ## EDITING
 ### INSERT
@@ -12,17 +24,18 @@
 - I : Enter Insert mode at the BEGINNING of current LINE
 - a : Enter Insert mode as Appending to the CURRENT position
 - A : Enter Insert mode as Appending to the END of current LINE
-- o : Enter New Line insert mode in to ONE line BELOW
-- O : Enter New Line insert mode in to ONE line ABOVE
+- o : Enter New Line in to ONE line BELOW
+- O : Enter New Line in to ONE line ABOVE
+- ss : in .vimrc set **nnoremap ss i<space><esc>** to give space WITHOUT staying in Insert Mode
 
+`NOTE:` To make the editing more efficient, we don't need to enter Insert mode while doing the ** new line** or **space** operation.
 ### DELETING
 - x  : Delete one Character to the RIGHT
 - X  : Delete one character to the LEFT
 - dd : Delete Current LINE
 - D  : Delete to the END of Line same to motion d$
 
-### MOTIONS
-#### DELETE / EDITING
+#### DELETE / EDITING -  MOTION
 `NOTE:` Most of the time d command do **CUT**
 - dw : Delete from current Position to [End of WORD]
 - db : Delete from Current Position to [Beginning of WORD]
@@ -34,33 +47,38 @@
 - dt<any character> : Delete til Specific Characters
 - di< ( or " or ' or { or \[ >
 - ci< ( or " or ' or { or \[ >
-- f<Any character>
+- C : Change till the end of Line, means delete till end of line from current cursor and enter Insert mode
 
 ### VISULIZE
 - v : Enter Visualize mode in current cursor
 - V : Enter Visualize mode and Select current line
 
-## COPY/PASTE
-- y : Yank a single character
-- Y : Yank the line
-- p : Paste the copied
-### VISUALIZE - MOTION
+#### VISUALIZE - MOTION
+- v< h,j,k,l > : selecting navigation
+- ve : select till end of current word
 - v$ : Select to the end of line
-- vb
-- bv$
-- bve : Select current word
-- ggvG
+- vb : select to the beginning of word
+- bv$: select till beginning of word.
+- bve : select current word
+- ggvG : select the whole file.
 
-
+## COPY/PASTE
+- y : **Y**ank a single character
+- Y : **Y**ank the line
+- p : **P**aste the copied
+- P : **P**aste to Above line
+- YP : Duplicate line, meaning **Y**ank and **P**aste
 
 ## SAVE / EXITING
-- <leader>w : Map this in .vimrc file for quick save - nmap <leader>w :w!<cr>
+- <leader>w : Map this in .vimrc file for quick **W**rite **nmap <leader>w :w!<cr>**
 - ZZ        : Quick Save and Close
 - ZQ        : Quick Close WITHOUT Saving
+- :q!, :wq! : Quit, Save Quit respectively
 
-** COMMAND / PANE **
-- :!<terminal command>  : Execute any terminal command
-- :vsp <path_to_file>   : Split pane verically and set the recent opened pane active
-- :sp <path_to_file>    : Split pane horizontally and set the recent opened pane active
-- c-ww                  : Ctrl+ww navigate through all the opened pane
--
+## COMMAND / PANE
+- :!< terminal command >  : **Execute** any terminal command
+- :vsp <path_to_file>   : **V**ertical **S**plit **p**ane and set the recent opened pane active
+- :sp <path_to_file>    : **S**plit **p**ane horizontally and set the recent opened pane active
+- c-ww                  : Ctrl+ww navigate through all the opened pane/**W**indow
+- c-wo                  : Close **O**ther panes
+- :o < file >           : Open file
