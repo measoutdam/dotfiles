@@ -8,3 +8,5 @@ Presents the daily vim usage.
 https://github.com/rtorr/vim-cheat-sheet
 
 https://github.com/jordanhudgens/vim-settings
+
+https://github.com/samnang/dotfiles
