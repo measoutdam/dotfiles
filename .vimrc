@@ -24,6 +24,7 @@ Plugin 'kana/vim-operator-user'
 Plugin 'haya14busa/vim-operator-flashy'
 
 call vundle#end()            " required
+
 " *********      End of Plugins      ***********
 
 
@@ -35,6 +36,7 @@ syntax on
 set number
 set autoread
 set visualbell
+let mapleader=","
 
 " Make backspace works like most program
 set backspace=indent,eol,start
@@ -103,14 +105,10 @@ nmap Y <Plug>(operator-flashy)$
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+let NERDTreeIgnore = ['\.swp$', '\.DS_Store$', '\.ebextensions', '\.git$']
 
 " ctrlp.vim 
 let g:ctrlp_match_window = 'max:15'
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   " for Linux/MacOSX
-
-" vim nerdtree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" vim show image
-let NERDTreeIgnore = ['\.swp$', '\.DS_Store$', '\.ebextensions', '\.git$']
