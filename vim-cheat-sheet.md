@@ -55,11 +55,14 @@
 
 #### VISUALIZE - MOTION
 - v< h,j,k,l > : selecting navigation
-- ve : select till end of current word
-- v$ : Select to the end of line
+- ve : select till end of word from current cursor position
+- vb : select till beginning of word from current cursor position
+- viw | bve | bve : select current word
+- v$ : select to the end of line
+- v0 : select to the beginnig of line
 - vb : select to the beginning of word
-- bv$: select till beginning of word.
-- bve : select current word
+- 0v$ | $v0: select current line from index 0 of the line
+- ^v$ : select current line from non-blank character of the line
 - ggvG : select the whole file.
 
 ## COPY/PASTE

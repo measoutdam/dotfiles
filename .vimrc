@@ -25,6 +25,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
+Plugin 'gabrielelana/vim-markdown'
+Plugin 'mileszs/ack.vim'
 
 call vundle#end()            " required
 
@@ -88,6 +90,7 @@ nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap cc cc<Esc>
 nnoremap cc cc<Esc>
+nnoremap <leader>vl ^v$
 nmap <leader>qq :qa<cr>
 nnoremap <leader>w :w!<cr>
 nnoremap <leader>r :@:<cr>
