@@ -26,7 +26,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
 Plugin 'gabrielelana/vim-markdown'
-Plugin 'mileszs/ack.vim'
+Plugin 'rking/ag.vim'
 
 call vundle#end()            " required
 
@@ -40,7 +40,7 @@ set number
 set autoread
 set visualbell
 let mapleader=","
-
+set hlsearch
 " Make backspace works like most program
 set backspace=indent,eol,start
 
