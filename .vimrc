@@ -22,6 +22,9 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'kana/vim-operator-user'
 Plugin 'haya14busa/vim-operator-flashy'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'Yggdroot/indentLine'
 
 call vundle#end()            " required
 
@@ -75,6 +78,7 @@ colorscheme solarized
 set foldmethod=syntax             "fold based on indent
 set foldnestmax=3                 "deepest fold is 3 levels
 set nofoldenable                  "dont fold by default
+set cursorline
 
 " *********************************************
 " *       Normal Mode - Action Remapped       *
@@ -120,3 +124,20 @@ let g:ctrlp_match_window = 'max:15'
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   " for Linux/MacOSX
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|.git\|tmp\|.bundle\|vendor/ruby'
+
+" vim-airline
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#hunks#non_zero_only = 1
+let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
+
+" IndenLine
+let g:indentLine_enabled = 0
+let g:indentLine_char = '│'
+let g:indentLine_color_term = 0
+let g:indentLine_faster = 1
+let g:indentLine_indentLevel = 8
+let g:indentLine_leadingSpaceEnabled = 1
+let g:indentLine_leadingSpaceChar = '·'
+map <leader>I :IndentLinesToggle<CR>
