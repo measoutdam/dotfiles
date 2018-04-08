@@ -1,7 +1,6 @@
 " *********************************************
 " *             Vundle - Plugins              *
 " *********************************************
-
 " Vundle Config
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -22,16 +21,15 @@ Plugin 'ervandew/supertab'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'kana/vim-operator-user'
 Plugin 'haya14busa/vim-operator-flashy'
+Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()            " required
 
 " *********      End of Plugins      ***********
 
-
 " *********************************************
 " *               General config              *
 " *********************************************
-
 syntax on
 set number
 set autoread
@@ -71,6 +69,13 @@ set noswapfile
 set nobackup
 set nowb
 
+set t_Co=256             " Set terminal to 256 colors
+set background=dark
+colorscheme solarized
+set foldmethod=syntax             "fold based on indent
+set foldnestmax=3                 "deepest fold is 3 levels
+set nofoldenable                  "dont fold by default
+
 " *********************************************
 " *       Normal Mode - Action Remapped       *
 " *********************************************
@@ -96,7 +101,6 @@ nnoremap <silent> <Leader>] :exe "resize " . (winheight(0) * 2/3)<CR>
 " *********************************************
 " *           Plugin Customization            *
 " *********************************************
-
 " Vim Operator Flashy
 map y <Plug>(operator-flashy)
 nmap Y <Plug>(operator-flashy)$
@@ -107,8 +111,12 @@ let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-let NERDTreeIgnore = ['\.swp$', '\.DS_Store$', '\.ebextensions', '\.git$']
+let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle']
+map \ :NERDTreeToggle<CR> " File tree browser - ackslash
+map \| :NERDTreeFind<CR> " File tree browser showing current file - pipe (shift-backslash)
 
 " ctrlp.vim 
 let g:ctrlp_match_window = 'max:15'
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   " for Linux/MacOSX
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|.git\|tmp\|.bundle\|vendor/ruby'
