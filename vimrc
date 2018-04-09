@@ -25,6 +25,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
 Plugin 'gabrielelana/vim-markdown'
+Plugin 'wikitopian/hardmode'
 
 call vundle#end()   " required
 
@@ -188,3 +189,6 @@ map <leader>a :call AckGrep('')<CR>
 " AckVisual current selection
 vmap <leader>a :call AckVisual()<CR>
 command! -nargs=? Ag call AckGrep(<q-args>)
+
+" Vim Hardmode
+nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
