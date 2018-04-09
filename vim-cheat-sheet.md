@@ -1,4 +1,3 @@
-
 ## NAVIAGTION
 - h, l , j, k : navigate Left, Right, Down, Up respectively
 - e : to end of word
@@ -48,6 +47,10 @@
 - di< ( or " or ' or { or \[ >
 - ci< ( or " or ' or { or \[ >
 - C : Change till the end of Line, means delete till end of line from current cursor and enter Insert mode
+- ct<any char> : 'change till<char>' better way to navigate through line (aviod using jhkl)
+- ft<any char> : 'find till<char>' better way to navigate through line (aviod using jhkl)
+- cf<any char> : 'change by find till specific <char>'
+
 
 ### VISULIZE
 - v : Enter Visualize mode in current cursor

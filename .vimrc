@@ -7,7 +7,6 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" Plugins
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround'
@@ -26,7 +25,6 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
 Plugin 'gabrielelana/vim-markdown'
-Plugin 'rking/ag.vim'
 
 call vundle#end()            " required
 
@@ -41,6 +39,7 @@ set autoread
 set visualbell
 let mapleader=","
 set hlsearch
+set laststatus=2
 " Make backspace works like most program
 set backspace=indent,eol,start
 
@@ -80,11 +79,17 @@ colorscheme solarized
 set foldmethod=syntax             "fold based on indent
 set foldnestmax=3                 "deepest fold is 3 levels
 set nofoldenable                  "dont fold by default
-set cursorline
+
+" Faster Vim
+let g:ruby_path = system('echo $HOME/.rbenv/shims')
+set lazyredraw
+set ttyfast
+set ttyscroll=3
 
 " *********************************************
 " *       Normal Mode - Action Remapped       *
 " *********************************************
+" General Key mapping
 nnoremap ss i<space><esc>
 nnoremap o o<Esc>
 nnoremap O O<Esc>
@@ -96,14 +101,15 @@ nnoremap <leader>w :w!<cr>
 nnoremap <leader>r :@:<cr>
 nmap <leader>ne :NERDTree<cr>
 nmap ; :
+
 " Map new line to Shift+enter
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
 " Vim - Window Pane Resizing 
-nnoremap <silent> <Leader>[ :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>] :exe "resize " . (winheight(0) * 2/3)<CR>
-
+nnoremap <silent> <leader>[ :vertical resize +10<cr>
+nnoremap <silent> <leader>] :vertical resize -10<cr>
+nnoremap <silent> <leader>} :vertical resize 30<cr>
 
 " *********************************************
 " *           Plugin Customization            *
@@ -144,3 +150,32 @@ let g:indentLine_indentLevel = 8
 let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 map <leader>I :IndentLinesToggle<CR>
+
+" Ack current word in command mode
+function! AckGrep(word)
+  if empty(a:word)
+    let word = expand("<cword>")
+  else
+    let word = a:word
+  endif
+
+  cgetexpr system("ag --search-files ".word)
+  cw
+endfunction
+
+function! AckVisual()
+  normal gv"xy
+
+  let escape_chars = ['(', ')']
+  for char in escape_chars
+    let @x = escape(@x, char)
+  endfor
+
+  call AckGrep(shellescape(@x))
+endfunction
+
+" AckGrep current word
+map <leader>a :call AckGrep('')<CR>
+" AckVisual current selection
+vmap <leader>a :call AckVisual()<CR>
+command! -nargs=? Ag call AckGrep(<q-args>)
