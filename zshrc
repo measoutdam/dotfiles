@@ -4,6 +4,7 @@ export ZSH=/Users/measoutdam/.oh-my-zsh
 export ZSHRC=/Users/measoutdam/.zshrc
 export VIMRC=/Users/measoutdam/.vimrc
 export DOTFILES=~/Dropbox/Backups/dotfiles
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -83,7 +84,7 @@ export PATH=$PATH:/Users/measoutdam/bin/
 alias cd bl="cd ~/Documents/code/bongloy"
 alias reboot="sudo reboot now"
 alias tmux a="tmux attach"
-alias dotfile_sync= "cd $DOTFILES; ./sync.sh" 
+alias sync_dotfiles="$DOTFILES/sync.sh"
 
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux-layouts"
