@@ -83,6 +83,7 @@ export PATH=$PATH:/Users/measoutdam/bin/
 alias cd bl="cd ~/Documents/code/bongloy"
 alias reboot="sudo reboot now"
 alias tmux a="tmux attach"
+alias dotfile_sync= "cd $DOTFILES; ./sync.sh" 
 
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux-layouts"
