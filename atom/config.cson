@@ -1,1 +1,86 @@
-/Users/measoutdam/.atom/config.cson
+"*":
+  "atom-beautify":
+    general:
+      _analyticsUserId: "2545960c-1d34-4d84-bb95-658dd62639d7"
+  "atom-ide-ui":
+    use: {}
+  "autocomplete-plus":
+    confirmCompletion: "tab always, enter when suggestion explicitly selected"
+  "block-cursor":
+    global:
+      blinkOff:
+        borderStyle: "i-beam"
+      blinkOn:
+        backgroundColor: "rgba(255, 0, 0, 0.4)"
+        borderColor: "rgba(255, 255, 255, 0.3)"
+        borderStyle: "bordered-box"
+        borderWidth: 1
+  "config-import-export":
+    defaultPath: {}
+  core:
+    disabledPackages: [
+      "language-csharp"
+      "language-go"
+      "language-java"
+      "language-make"
+      "language-mustache"
+      "language-toml"
+      "language-shellscript"
+      "language-python"
+      "language-perl"
+      "language-objective-c"
+      "language-c"
+      "full-path-in-title-bar"
+      "block-cursor"
+      "linter-scss-lint"
+      "minimap"
+      "atom-ide-ui"
+    ]
+    telemetryConsent: "limited"
+    themes: [
+      "solarized-dark-ui"
+      "solarized-dark-syntax"
+    ]
+  "custom-title":
+    template: "<%= projectName %><% if (relativeFilePath) { %>[<%= gitHead %>] -- <%= relativeFilePath %> <% } %>"
+  editor:
+    fontFamily: "operator mono"
+    fontSize: 19
+    invisibles: {}
+    lineHeight: 1.6
+    preferredLineLength: 100
+    scrollPastEnd: true
+    showInvisibles: true
+    softWrap: true
+    zoomFontWhenCtrlScrolling: true
+  "exception-reporting":
+    userId: "1aa80193-7f14-4a53-97ee-f84cee4f6057"
+  "fold-functions": {}
+  fonts:
+    fontFamily: "PT Mono"
+  "git-diff":
+    showIconsInEditorGutter: true
+  "git-log":
+    fontScale: 1
+  "goto-definition":
+    performanceMode: true
+  "linter-haml":
+    executablePath: "/Users/measoutdam/.rbenv/shims/haml-lint"
+  "linter-rubocop":
+    command: "/Users/measoutdam/.rbenv/shims/rubocop"
+  "linter-scss-lint": {}
+  "linter-ui-default":
+    panelHeight: 205
+  rspec:
+    command: "./bin/rspec"
+    save_before_run: true
+  "tree-view":
+    hideIgnoredNames: true
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
+  whitespace:
+    ensureSingleTrailingNewline: true
+    ignoreWhitespaceOnCurrentLine: false
+  zentabs:
+    maximumOpenedTabs: 8

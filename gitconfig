@@ -1,1 +1,45 @@
-/Users/measoutdam/.gitconfig
+[color]
+	ui = true
+[user]
+	name = Outdam Meas
+	email = mstdam@gmail.com
+[alias]
+  aa = add -A
+  o = browse --
+  st = status 
+  ci = commit
+  cm = commit -m
+  pf = push --force-with-lease
+  amend = commit -a --amend
+  br = branch
+  bl = for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(authordate:short) %(color:red)%(objectname:short) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) - (%(color:green)%(committerdate:relative)%(color:reset))'
+  co = checkout
+  df = diff
+  ds = diff --staged
+  dc = diff --cached
+  pr = "!f() { ~/.dotfiles/bin/open-github-pr-page.sh; }; f"
+  up = pull --rebase --prune
+  wip = !git add -A && git commit -m "WIP"
+  undo = reset HEAD~1 --mixed
+  bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs git branch -d; }; f"
+  bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+  l = log --graph --decorate --pretty=oneline --abbrev-commit --date=relative --color -n 20
+  lg = log --graph --decorate --pretty=oneline --abbrev-commit --all --color
+  lga = log --all --graph --decorate --oneline --simplify-by-decoration
+  lgp = log -p
+  graph = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --all --date=short
+  ls = ls-file
+  ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags'"
+  publish = "!git push -u origin \"$(git rev-parse --abbrev-ref HEAD)\""
+  unpublish = "!git push origin :\"$(git rev-parse --abbrev-ref HEAD)\""
+	adog = log --all --decorate --oneline --graph
+	glog = log --oneline --graph
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	s = status -s
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[core]
+	editor = vim

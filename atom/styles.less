@@ -1,1 +1,86 @@
-/Users/measoutdam/.atom/styles.less
+// whole workplace settin
+
+atom-workspace {
+  font-family: "ubuntu mono";
+}
+// style UI elements inside atom-text-editor
+atom-text-editor {
+  linter-message.info {
+    background-color: rgb(202, 220, 228) !important;
+    color: #0098ff !important;
+  }
+
+  .invisible-character {
+    color: #424344;
+  }
+
+  .placeholder-text,
+  .text-subtle {
+    color: #486873 !important;
+  }
+
+  .line-numbers .icon-right {
+    color: white;
+  }
+}
+// Indent guide plugin
+.indent-guide-improved {
+  background-color: rgba(192,192,192,0.3);
+
+  &.indent-guide-stack {
+    background-color: rgba(248,248,248, 0.4);
+
+    &.indent-guide-active {
+      background-color: rgb(100, 220, 228);
+    }
+  }
+}
+
+atom-text-editor[mini] {
+  background-color: #002B32;
+}
+// style the background color of the tree view
+.tree-view {
+  font-size: 15px;
+}
+// setting - search box
+.settings-view {
+  .packages .search-container .btn,
+  .section atom-text-editor[mini] {
+    border: solid 0.1px rgba(255,255,255,0.2);
+  }
+}
+
+.list-group .selected::before,
+.list-tree .selected::before {
+  background-color: #2d3f44;
+}
+
+.editor .comment,
+atom-text-editor.editor .syntax--comment {
+  font-family: "Fira mono";
+}
+
+.overlay,
+atom-panel.modal {
+  font-size: medium;
+  width: 700px;
+}
+
+.select-list ol.list-group li {
+  border-bottom: solid 1px #003b4a;
+}
+
+.settings-view.pane-item,
+.tab-bar .tab .title {
+  font-size: larger;
+}
+
+.results-view-container .list-tree li.list-nested-item > .list-item {
+  color: #859900;
+  font-weight: bold;
+}
+
+.results-view-container {
+  font-size: larger;
+}
