@@ -26,7 +26,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
 Plugin 'gabrielelana/vim-markdown'
 
-call vundle#end()            " required
+call vundle#end()   " required
 
 " *********      End of Plugins      ***********
 
@@ -102,10 +102,6 @@ nnoremap <leader>r :@:<cr>
 nmap <leader>ne :NERDTree<cr>
 nmap ; :
 
-" Map new line to Shift+enter
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
-
 " Vim - Window Pane Resizing 
 nnoremap <silent> <leader>[ :vertical resize +10<cr>
 nnoremap <silent> <leader>] :vertical resize -10<cr>
@@ -150,6 +146,18 @@ let g:indentLine_indentLevel = 8
 let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 map <leader>I :IndentLinesToggle<CR>
+
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 
 " Ack current word in command mode
 function! AckGrep(word)
