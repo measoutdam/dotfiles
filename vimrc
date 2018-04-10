@@ -1,5 +1,5 @@
 " *********************************************
-" *             Vundle - Plugins              *
+" *             Vundle - Plugin              *
 " *********************************************
 " Vundle Config
 set nocompatible              " be iMproved, required
@@ -8,6 +8,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
@@ -16,7 +17,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'weynhamz/vim-plugin-powerline'
-Plugin 'ervandew/supertab'
+Plugin 'ervandew/supertab' 
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'kana/vim-operator-user'
 Plugin 'haya14busa/vim-operator-flashy'
@@ -26,7 +27,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
 Plugin 'gabrielelana/vim-markdown'
 Plugin 'wikitopian/hardmode'
-
+Plugin 'rking/ag.vim'
 call vundle#end()   " required
 
 " *********      End of Plugins      ***********
@@ -36,6 +37,7 @@ call vundle#end()   " required
 " *********************************************
 syntax on
 set number
+set showcmd
 set autoread
 set visualbell
 let mapleader=","
@@ -77,15 +79,8 @@ set nowb
 set t_Co=256             " Set terminal to 256 colors
 set background=dark
 colorscheme solarized
-set foldmethod=syntax             "fold based on indent
-set foldnestmax=3                 "deepest fold is 3 levels
 set nofoldenable                  "dont fold by default
 
-" Faster Vim
-let g:ruby_path = system('echo $HOME/.rbenv/shims')
-set lazyredraw
-set ttyfast
-set ttyscroll=3
 
 " *********************************************
 " *       Normal Mode - Action Remapped       *
@@ -95,12 +90,10 @@ nnoremap ss i<space><esc>
 nnoremap o o<Esc>
 nnoremap O O<Esc>
 nnoremap cc cc<Esc>
-nnoremap cc cc<Esc>
 nnoremap <leader>vl ^v$
 nmap <leader>qq :qa<cr>
 nnoremap <leader>w :w!<cr>
 nnoremap <leader>r :@:<cr>
-nmap <leader>ne :NERDTree<cr>
 nmap ; :
 
 " Vim - Window Pane Resizing 
@@ -116,6 +109,7 @@ map y <Plug>(operator-flashy)
 nmap Y <Plug>(operator-flashy)$
 
 " NERDTree
+nmap <leader>ne :NERDTree<cr>
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
@@ -148,6 +142,9 @@ let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 map <leader>I :IndentLinesToggle<CR>
 
+" Vim Hardmode
+nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
+
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
@@ -159,36 +156,33 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
-
-" Ack current word in command mode
-function! AckGrep(word)
-  if empty(a:word)
-    let word = expand("<cword>")
-  else
-    let word = a:word
-  endif
-
-  cgetexpr system("ag --search-files ".word)
-  cw
-endfunction
-
-function! AckVisual()
-  normal gv"xy
-
-  let escape_chars = ['(', ')']
-  for char in escape_chars
-    let @x = escape(@x, char)
-  endfor
-
-  call AckGrep(shellescape(@x))
-endfunction
-
-" AckGrep current word
+"" AckGrep current word
 map <leader>a :call AckGrep('')<CR>
 
 " AckVisual current selection
 vmap <leader>a :call AckVisual()<CR>
 command! -nargs=? Ag call AckGrep(<q-args>)
 
-" Vim Hardmode
-nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
+" Custom for QuickFix
+map <leader>co :copen<CR>
+" AG.VIM
+nnoremap <leader>f :Ag<Space>
+let g:ag_working_path_mode="r"
+
+" Ack current word in command mode
+function! AckGrep(word)
+  let word = empty(a:word) ? expand("<cword>") : a:word
+  execute "Ag ".word
+  cw
+endfunction
+
+function! AckVisual()
+  normal gv"xy
+  let escape_chars = ['(', ')']
+  for char in escape_chars
+    let @x = escape(@x, char)
+  endfor
+  execute "Ag ".shellescape(@x)
+  cw
+endfunction
+
