@@ -17,17 +17,27 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'weynhamz/vim-plugin-powerline'
-Plugin 'ervandew/supertab' 
+Plugin 'ervandew/supertab'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'kana/vim-operator-user'
 Plugin 'haya14busa/vim-operator-flashy'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
 Plugin 'gabrielelana/vim-markdown'
 Plugin 'wikitopian/hardmode'
 Plugin 'rking/ag.vim'
+Plugin 'vim-utils/vim-ruby-fold'
+Plugin 'ngmy/vim-rubocop'
+Plugin 'Chiel92/vim-autoformat'
+Plugin 'bogado/file-line'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'janko-m/vim-test'
+Plugin 'tpope/vim-dispatch'
+Plugin 'romainl/vim-qf'
+
 call vundle#end()   " required
 
 " *********      End of Plugins      ***********
@@ -46,7 +56,7 @@ set laststatus=2
 " Make backspace works like most program
 set backspace=indent,eol,start
 
-" Indentation 
+" Indentation
 filetype plugin indent on    " required
 set autoindent
 set smartindent
@@ -79,27 +89,40 @@ set nowb
 set t_Co=256             " Set terminal to 256 colors
 set background=dark
 colorscheme solarized
-set nofoldenable                  "dont fold by default
 
+" Custom for QuickFix
+map <leader>co :copen<CR>
 
 " *********************************************
 " *       Normal Mode - Action Remapped       *
 " *********************************************
 " General Key mapping
 nnoremap ss i<space><esc>
-nnoremap o o<Esc>
-nnoremap O O<Esc>
-nnoremap cc cc<Esc>
+nnoremap <Space> :noh<cr>
 nnoremap <leader>vl ^v$
-nmap <leader>qq :qa<cr>
+nmap <leader>QQ :qa<cr>
 nnoremap <leader>w :w!<cr>
-nnoremap <leader>r :@:<cr>
+nnoremap <leader>R :@:<cr>
 nmap ; :
 
-" Vim - Window Pane Resizing 
-nnoremap <silent> <leader>[ :vertical resize +10<cr>
-nnoremap <silent> <leader>] :vertical resize -10<cr>
-nnoremap <silent> <leader>} :vertical resize 30<cr>
+" Easier navigation between split windows
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+" Open the definition in a new split
+nnoremap <c-\> <c-w>g<c-]>
+
+" Convert old hash to new Ruby 1.9 syntax
+map <leader>: :%s/:\(\w\+\)\(\s*=>\s*\)/\1: /gc<CR>
+
+map <leader>' :%s/'\([^']*\)'/"\1"/gc<CR>
+
+" Vim - Window Pane Resizing
+" nnoremap <silent> <leader>[ :vertical resize +10<cr>
+" nnoremap <silent> <leader>] :vertical resize -10<cr>
+" nnoremap <silent> <leader>} :vertical resize 30<cr>
 
 " *********************************************
 " *           Plugin Customization            *
@@ -119,7 +142,7 @@ let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bun
 map \ :NERDTreeToggle<CR> " File tree browser - ackslash
 map \| :NERDTreeFind<CR> " File tree browser showing current file - pipe (shift-backslash)
 
-" ctrlp.vim 
+" ctrlp.vim
 let g:ctrlp_match_window = 'max:15'
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   " for Linux/MacOSX
 let g:ctrlp_clear_cache_on_exit = 0
@@ -145,7 +168,12 @@ map <leader>I :IndentLinesToggle<CR>
 " Vim Hardmode
 nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+" AG.VIM
+"" Mapping
+nnoremap <leader>f :Ag<Space>
+let g:ag_working_path_mode="r"
+
+"" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
@@ -156,20 +184,15 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
+
 "" AckGrep current word
 map <leader>a :call AckGrep('')<CR>
 
-" AckVisual current selection
+"" AckVisual current selection
 vmap <leader>a :call AckVisual()<CR>
 command! -nargs=? Ag call AckGrep(<q-args>)
 
-" Custom for QuickFix
-map <leader>co :copen<CR>
-" AG.VIM
-nnoremap <leader>f :Ag<Space>
-let g:ag_working_path_mode="r"
-
-" Ack current word in command mode
+"" Ack current word in command mode
 function! AckGrep(word)
   let word = empty(a:word) ? expand("<cword>") : a:word
   execute "Ag ".word
@@ -186,3 +209,38 @@ function! AckVisual()
   cw
 endfunction
 
+" VIM FOLD
+let g:ruby_fold_lines_limit = 1000
+
+" VIM ROBUCOP
+let g:vimrubocop_config = './.rubocop.yml'
+let g:vimrubocop_keymap = 0
+
+" BETTER WHITESPACE
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+
+" VIM TEST
+nmap <silent> <leader>R :TestFile -strategy=basic<CR>
+nmap <silent> <leader>r :TestNearest -strategy=basic<CR>
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>A :TestSuite<CR>
+nmap <silent> <leader>. :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+let test#strategy = "dispatch"
+let g:test#ruby#rspec#executable = './bin/rspec'
+" Toggles the quickfix window.
+nmap <leader>q <Plug>(qf_qf_toggle)
+" Find Cucumber's unused steps
+command! CucumberFindUnusedSteps :call CucumberFindUnusedSteps()
+function! CucumberFindUnusedSteps()
+  let olderrorformat = &l:errorformat
+  try
+    set errorformat=%m#\ %f:%l
+    cexpr system('bundle exec cucumber --no-profile --no-color --format usage --dry-run features \| grep "NOT MATCHED BY ANY STEPS" -B1 \| egrep -v "(--\|NOT MATCHED BY ANY STEPS)"')
+    cwindow
+  finally
+    let &l:errorformat = olderrorformat
+  endtry
+endfunction
