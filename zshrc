@@ -7,30 +7,6 @@ export DOTFILES=~/Dropbox/Backups/dotfiles
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 ZSH_THEME="powerlevel9k/powerlevel9k"
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
-POWERLEVEL9K_STATUS_VERBOSE=false
-# POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
-# POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
-# POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
-# POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
-# POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='white'
-# POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='black'
-# POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='black'
-# POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='blue'
-# POWERLEVEL9K_STATUS_OK_IN_NON_VERBOSE=true
-# POWERLEVEL9K_STATUS_VERBOSE=false
-# POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
-# POWERLEVEL9K_VCS_UNTRACKED_ICON='\u25CF'
-# POWERLEVEL9K_VCS_UNSTAGED_ICON='\u00b1'
-# POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='\u2193'
-# POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\u2191'
-# POWERLEVEL9K_VCS_COMMIT_ICON="\uf417"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status rbenv time)
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_SHORTEN_DELIMITER=""
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -76,23 +52,27 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export EDITOR=vim
 export PATH="$(brew --prefix qt@5.5)/bin:$PATH"
 export PATH=$PATH:/Users/measoutdam/bin/
-
-# alias
-alias cd bl="cd ~/Documents/code/bongloy"
-alias reboot="sudo reboot now"
-alias tmux a="tmux attach"
-alias sync_dotfiles="$DOTFILES/sync.sh"
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux-layouts"
 eval "$(tmuxifier init -)"
-export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
-export TEST_MERCHANT_ACCOUNT_ID="1f229294-46ca-4c84-b46b-9056ab7d7606"
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-export EDITOR=atom
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+# aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
+
+#########################
+# Plugins Customization #
+#########################
+# Custom POWERLEVEL9K Theme
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status rbenv time)
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+POWERLEVEL9K_RBENV_BACKGROUND="green"

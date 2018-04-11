@@ -66,16 +66,6 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
-" Current cursor shape
-let &t_SI.="\e[5 q"
-let &t_EI.="\e[1 q"
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-
 " Display tabs and trailing spaces visually
 set list listchars=tab:\ \ ,trail:·
 set nowrap       "Don't wrap lines
