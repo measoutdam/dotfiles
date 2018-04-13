@@ -4,7 +4,7 @@ export ZSH=/Users/measoutdam/.oh-my-zsh
 export ZSHRC=/Users/measoutdam/.zshrc
 export VIMRC=/Users/measoutdam/.vimrc
 export DOTFILES=~/Dropbox/Backups/dotfiles
-
+export TERM=xterm-256color
 # Set name of the theme to load. Optionally, if you set this to "random"
 ZSH_THEME="powerlevel9k/powerlevel9k"
 

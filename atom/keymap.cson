@@ -35,3 +35,5 @@
   'alt-[': 'vim-mode-plus:activate-normal-mode',
   'ctrl-p': 'fuzzy-finder:toggle-file-finder',
   'alt-r': 'linter-rubocop:fix-file',
+'.platform-darwin atom-workspace':
+  'ctrl-.':'platformio-ide-terminal:toggle'

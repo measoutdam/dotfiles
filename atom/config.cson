@@ -35,6 +35,7 @@
       "linter-scss-lint"
       "minimap"
       "atom-ide-ui"
+      "rspec"
     ]
     telemetryConsent: "limited"
     themes: [
@@ -70,9 +71,20 @@
   "linter-scss-lint": {}
   "linter-ui-default":
     panelHeight: 205
+  "platformio-ide-terminal":
+    core: {}
+    style:
+      fontFamily: "DejaVu Sans Mono for Powerline"
+      theme: "solarized-dark"
   rspec:
     command: "./bin/rspec"
     save_before_run: true
+  "ruby-test":
+    rspecAllCommand: "./bin/rspec --tty spec"
+    rspecFileCommand: "./bin/rspec --tty {relative_path}"
+    rspecSingleCommand: "./bin/rspec --tty {relative_path}:{line_number}"
+  term3:
+    fontFamily: "DejaVu Sans Mono for Powerline"
   "tree-view":
     hideIgnoredNames: true
     hideVcsIgnoredFiles: true
