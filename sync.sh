@@ -2,6 +2,7 @@ rsync ~/.agignore $DOTFILES/agignore --inplace
 rsync ~/.vimrc $DOTFILES/vimrc --inplace
 rsync ~/.zshrc $DOTFILES/zshrc --inplace
 rsync ~/.aliases $DOTFILES/aliases --inplace
+rsync ~/.tmux.conf $DOTFILES/tmux.conf --inplace
 rsync -d ~/tmuxifier/templates $DOTFILES/tmuxifier/templates --inplace
 rsync -d ~/tmuxifier/layouts $DOTFILES/tmuxifier/layouts --inplace
 rsync ~/.gitconfig $DOTFILES/gitconfig --inplace

@@ -36,6 +36,8 @@ Plugin 'romainl/vim-qf'
 Plugin 'w0rp/ale'
 Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'dapplebeforedawn/vim-rspec-quickfix'
+
 call vundle#end()   " required
 
 " *********      End of Plugins      ***********
@@ -80,6 +82,7 @@ colorscheme solarized
 
 " set noticable current line number
 highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+highlight CursorLineNr ctermfg=15
 set cursorline
 
 " Custom for QuickFix
@@ -267,8 +270,7 @@ nmap <silent> <leader>A :TestSuite<CR>
 nmap <silent> <leader>. :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 let test#strategy = "dispatch"
-let g:test#ruby#rspec#executable = './bin/rspec'
-let g:rspec_command = "Dispatch rspec {spec}"
+let g:test#ruby#rspec#executable = "./bin/rspec"
 " Toggles the quickfix window.
 nmap <leader>q <Plug>(qf_qf_toggle)
 
@@ -291,3 +293,10 @@ function! StatusUpdated()
   call lightline#update()
   echom "alright!"
 endfunction
+
+" *********************************************
+" *        Local Vimrc Customization          *
+" *********************************************
+if filereadable($HOME . "/.vimrc.local")
+  source ~/.vimrc.local
+endif
