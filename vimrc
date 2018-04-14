@@ -16,7 +16,6 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'weynhamz/vim-plugin-powerline'
 Plugin 'ervandew/supertab'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'kana/vim-operator-user'
@@ -37,7 +36,7 @@ Plugin 'w0rp/ale'
 Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'dapplebeforedawn/vim-rspec-quickfix'
-
+Plugin 'ntpeters/vim-better-whitespace'
 call vundle#end()   " required
 
 " *********      End of Plugins      ***********
@@ -136,7 +135,7 @@ let g:lightline = {
       \ }
 function! LightLineFilename() " Make a better truncated relative path for file name
 	let name = ""
-	let subs = split(expand('%'), "/") 
+	let subs = split(expand('%'), "/")
 	let i = 1
 	for s in subs
 		let parent = name
@@ -156,19 +155,21 @@ endfunction
 " *********************************************
 " General Key mapping
 nnoremap ss i<space><esc>
-nnoremap <Space> :noh \| call StatusUpdated()<CR>
+nnoremap <Space> :noh \| :echom "Search results cleared!"<CR>
 nnoremap <leader>vl ^v$
 nnoremap <leader>w :w!<cr>
 nmap ; :
+
+" Working with vimrc
 nnoremap <leader>so :so ~/.vimrc<cr>
 nnoremap <leader>ev :e ~/.vimrc<cr>
-" Easier navigation between split windows
-nnoremap <c-j> <c-w>j \| :call StatusUpdated()<CR>
-nnoremap <c-k> <c-w>k \| :call StatusUpdated()<CR>
-nnoremap <c-h> <c-w>h \| :call StatusUpdated()<CR>
-nnoremap <c-l> <c-w>l \| :call StatusUpdated()<CR>
 
-,
+" Easier navigation between split windows
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
 " Folding
 nnoremap <leader>f za
 
@@ -194,8 +195,8 @@ autocmd StdinReadPre * let s:std_in=1
 "" Jump to the main window.
 autocmd VimEnter * wincmd p
 let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']
-map \ :NERDTreeToggle \| :call StatusUpdated()<CR> " File tree browser - ackslash
-map \| :NERDTreeFind  \| :call StatusUpdated()<CR> " File tree browser showing current file - pipe (shift-backslash)
+map \ :NERDTreeToggle<CR>  " File tree browser - ackslash
+map \| :NERDTreeFind<CR>   " File tree browser showing current file - pipe (shift-backslash)
 
 " ctrlp.vim
 let g:ctrlp_match_window = 'max:10'
@@ -271,6 +272,7 @@ nmap <silent> <leader>. :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 let test#strategy = "dispatch"
 let g:test#ruby#rspec#executable = "./bin/rspec"
+
 " Toggles the quickfix window.
 nmap <leader>q <Plug>(qf_qf_toggle)
 
@@ -284,15 +286,9 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_fixers = {'ruby': ['rubocop']}
 
-" Map <ALT+r> to for command ALEFix
+" ALEFix - <ALT-r>
 nnoremap ® :ALEFix<CR>
 vnoremap ® :ALEFix<CR>
-
-" Lightline
-function! StatusUpdated()
-  call lightline#update()
-  echom "alright!"
-endfunction
 
 " *********************************************
 " *        Local Vimrc Customization          *
