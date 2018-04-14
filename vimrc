@@ -16,8 +16,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'ervandew/supertab'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'ervandew/supertab'
 Plugin 'kana/vim-operator-user'
 Plugin 'haya14busa/vim-operator-flashy'
 Plugin 'Yggdroot/indentLine'
@@ -33,9 +33,9 @@ Plugin 'janko-m/vim-test'
 Plugin 'tpope/vim-dispatch'
 Plugin 'romainl/vim-qf'
 Plugin 'w0rp/ale'
-Plugin 'itchyny/lightline.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
-Plugin 'dapplebeforedawn/vim-rspec-quickfix'
 Plugin 'ntpeters/vim-better-whitespace'
 call vundle#end()   " required
 
@@ -44,16 +44,16 @@ call vundle#end()   " required
 " *********************************************
 " *               General config              *
 " *********************************************
+let mapleader=","
 syntax on
 set number
 set showcmd
 set autoread
 set visualbell
-let mapleader=","
-" Make backspace works like most program
+ "Make backspace works like most program
 set backspace=indent,eol,start
 
-" Indentation
+ "Indentation
 filetype plugin indent on    " required
 set autoindent
 set smartindent
@@ -64,92 +64,57 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
-" Display tabs and trailing spaces visually
+ "Display tabs and trailing spaces visually
 set list listchars=tab:\ \ ,trail:·
 set nowrap       "Don't wrap lines
 set linebreak    "Wrap lines at convenient points
 
-" Turn Off Swap Files
+ "Turn Off Swap Files
 set noswapfile
 set nobackup
 set nowb
 
-" Color Scheme
+ "Color Scheme
 syntax enable
 set background=dark
 colorscheme solarized
 
-" set noticable current line number
-highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
-highlight CursorLineNr ctermfg=15
-set cursorline
 
-" Custom for QuickFix
+ "Custom for QuickFix
 map <leader>co :copen<CR>
 
-" Cursor setup
+ "Cursor setup
 let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
 let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
-" Search
+ "Search
 set incsearch                     " Find as you type search
 set hlsearch                      " Highlight search terms
 set ignorecase                    " Case-insensitive searching.
 set smartcase                     " But case-sensitive if expression contains a capital letter.
 highlight IncSearch guibg=green ctermbg=green term=underline
 
-" Folding
-set foldmethod=syntax             "fold based on indent
+ "Folding
 set foldnestmax=3                 "deepest fold is 3 levels
 set nofoldenable                  "dont fold by default
 
-"" Solve insert mode performance
+ "Solve insert mode performance
 autocmd InsertLeave,WinEnter * setlocal foldmethod=syntax       "foldmethod stays as 'syntax' when not in insert mode
 autocmd InsertEnter,WinLeave * setlocal foldmethod=manual       "foldmethod must be set to 'manual' to improve performance during editing
 
-" Vim Faster
+ "Vim Faster
 let g:ruby_path = system('echo $HOME/.rbenv/shims')
 set lazyredraw
 set ttyfast
 set ttyscroll=3
 
-" lightline - status bar
+ "Status bar
 set laststatus=2                  " Show the status line all the time
 if !has('gui_running')
   set t_Co=256
 endif
-let g:lightline = {
-      \ 'colorscheme': 'solarized',
-      \ 'active': {
-      \   'left': [
-      \             ['mode', 'paste'],
-      \             ['gitbranch', 'readonly', 'filename', 'modified']
-      \           ],
-      \   'right': [[ 'lineinfo' ], ['percent'], ['filetype'] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
-      \   'filename' : 'LightLineFilename',
-			\ },
-      \ }
-function! LightLineFilename() " Make a better truncated relative path for file name
-	let name = ""
-	let subs = split(expand('%'), "/")
-	let i = 1
-	for s in subs
-		let parent = name
-		if  i == len(subs)
-			let name = parent . '/' . s
-		elseif i == 1
-			let name = s
-		else
-			let name = parent . '/' . strpart(s, 0, 2)
-		endif
-		let i += 1
-	endfor
-  return name
-endfunction
+
 " *********************************************
 " *       Normal Mode - Action Remapped       *
 " *********************************************
@@ -179,6 +144,7 @@ nnoremap <c-\> <c-w>gd<c-]>
 " Shortcut for =>
 imap <C-l> <Space>=><Space>
 
+
 " *********************************************
 " *           Plugin Customization            *
 " *********************************************
@@ -190,7 +156,7 @@ nmap Y <Plug>(operator-flashy)$
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-let g:NERDTreeStatusline = ''
+let NERDTreeStatusline = ""
 autocmd StdinReadPre * let s:std_in=1
 "" Jump to the main window.
 autocmd VimEnter * wincmd p
@@ -271,7 +237,6 @@ nmap <silent> <leader>A :TestSuite<CR>
 nmap <silent> <leader>. :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 let test#strategy = "dispatch"
-let g:test#ruby#rspec#executable = "./bin/rspec"
 
 " Toggles the quickfix window.
 nmap <leader>q <Plug>(qf_qf_toggle)
@@ -289,6 +254,9 @@ let g:ale_fixers = {'ruby': ['rubocop']}
 " ALEFix - <ALT-r>
 nnoremap ® :ALEFix<CR>
 vnoremap ® :ALEFix<CR>
+
+" Airline
+let g:airline_powerline_fonts = 1
 
 " *********************************************
 " *        Local Vimrc Customization          *
