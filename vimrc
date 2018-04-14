@@ -44,74 +44,68 @@ call vundle#end()   " required
 " *********************************************
 " *               General config              *
 " *********************************************
-let mapleader=","
+"Basic
 syntax on
 set number
 set showcmd
 set autoread
-set visualbell
- "Make backspace works like most program
-set backspace=indent,eol,start
+set visualbell                        "Disable sound
+let mapleader=','                     "Remap leader to ','
+set backspace=indent,eol,start        "Make backspace works like most program
 
- "Indentation
-filetype plugin indent on    " required
+
+
+"Indentation
+filetype plugin indent on
 set autoindent
 set smartindent
 set smarttab
 set shiftwidth=2
-
 set softtabstop=2
 set tabstop=2
 set expandtab
 
- "Display tabs and trailing spaces visually
-set list listchars=tab:\ \ ,trail:·
+"Display tabs and trailing spaces visually
 set nowrap       "Don't wrap lines
 set linebreak    "Wrap lines at convenient points
 
- "Turn Off Swap Files
+"Turn Off Swap Files
 set noswapfile
 set nobackup
 set nowb
 
- "Color Scheme
-syntax enable
-set background=dark
-colorscheme solarized
+"Color Scheme
+syntax enable                     "Scheme: enable syntax highlight for different file type
+set background=dark               "Scheme: use dark color scheme
+colorscheme solarized             "Scheme: color scheme
 
-
- "Custom for QuickFix
-map <leader>co :copen<CR>
-
- "Cursor setup
+"Cursor setup - Use different cursor shapes for insert and normal Mode
 let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
 let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
- "Search
-set incsearch                     " Find as you type search
-set hlsearch                      " Highlight search terms
-set ignorecase                    " Case-insensitive searching.
-set smartcase                     " But case-sensitive if expression contains a capital letter.
+"Search
+set incsearch                     "Search: Find as you type search
+set hlsearch                      "Search: Highlight search terms
+set ignorecase                    "Search: Case-insensitive searching.
+set smartcase                     "Search: But case-sensitive if expression contains a capital letter.
 highlight IncSearch guibg=green ctermbg=green term=underline
 
- "Folding
-set foldnestmax=3                 "deepest fold is 3 levels
-set nofoldenable                  "dont fold by default
-
- "Solve insert mode performance
+"Folding
+set foldnestmax=3                 "Folding: deepest fold is 3 levels
+set nofoldenable                  "Folding: dont fold by default
+""Solve insert mode performance
 autocmd InsertLeave,WinEnter * setlocal foldmethod=syntax       "foldmethod stays as 'syntax' when not in insert mode
 autocmd InsertEnter,WinLeave * setlocal foldmethod=manual       "foldmethod must be set to 'manual' to improve performance during editing
 
- "Vim Faster
+"Vim Faster
 let g:ruby_path = system('echo $HOME/.rbenv/shims')
 set lazyredraw
 set ttyfast
 set ttyscroll=3
 
- "Status bar
-set laststatus=2                  " Show the status line all the time
-if !has('gui_running')
+set laststatus=2                  "Show the status line all the time
+if !has('gui_running')            "Set terminal color to 256
   set t_Co=256
 endif
 
@@ -119,10 +113,14 @@ endif
 " *       Normal Mode - Action Remapped       *
 " *********************************************
 " General Key mapping
-nnoremap ss i<space><esc>
-nnoremap <Space> :noh \| :echom "Search results cleared!"<CR>
+nnoremap <Space> :noh \| :echom 'Search results cleared!'<CR>
+
 nnoremap <leader>vl ^v$
 nnoremap <leader>w :w!<cr>
+nnoremap <leader>f za
+nnoremap <c-\> <c-w>gd<c-]>
+imap <C-l> <Space>=><Space>
+map <leader>co :copen<CR>
 nmap ; :
 
 " Working with vimrc
@@ -135,16 +133,6 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" Folding
-nnoremap <leader>f za
-
-" Open the definition in a new split
-nnoremap <c-\> <c-w>gd<c-]>
-
-" Shortcut for =>
-imap <C-l> <Space>=><Space>
-
-
 " *********************************************
 " *           Plugin Customization            *
 " *********************************************
@@ -152,26 +140,15 @@ imap <C-l> <Space>=><Space>
 map y <Plug>(operator-flashy)
 nmap Y <Plug>(operator-flashy)$
 
-" NERDTree
-let NERDTreeShowHidden=1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-let NERDTreeStatusline = ""
-autocmd StdinReadPre * let s:std_in=1
-"" Jump to the main window.
-autocmd VimEnter * wincmd p
-let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']
-map \ :NERDTreeToggle<CR>  " File tree browser - ackslash
-map \| :NERDTreeFind<CR>   " File tree browser showing current file - pipe (shift-backslash)
-
 " ctrlp.vim
-let g:ctrlp_match_window = 'max:10'
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   " for Linux/MacOSX
+let g:ctrlp_match_window = 'max:10'         "max item in matched list
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   "for Linux/MacOSX
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|.git\|tmp\|.bundle\|vendor/ruby'
 let g:ctrlp_dont_split = 'nerdtree'
 
 " IndenLine
+set list listchars=tab:\ \ ,trail:·
 let g:indentLine_enabled = 1
 let g:indentLine_char = '│'
 let g:indentLine_color_term = 0
@@ -181,33 +158,60 @@ let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 map <leader>I :IndentLinesToggle<CR>
 
+" VIM ROBUCOP
+let g:vimrubocop_config = './.rubocop.yml'
+let g:vimrubocop_keymap = 0
+
+" VIM TEST
+nmap <silent> <leader>R :TestFile -strategy=basic<CR>
+nmap <silent> <leader>r :TestNearest -strategy=basic<CR>
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>A :TestSuite<CR>
+nmap <silent> <leader>. :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+let test#strategy = "dispatch"                                "Use Dispatch strategy, Plugin 'tpope/vim-dispatch' us required
+
+" Toggles the quickfix window.
+nmap <leader>q <Plug>(qf_qf_toggle)
+" NERDTree
+let NERDTreeShowHidden=1            "Nerdtree is hidden by default
+let NERDTreeMinimalUI = 1           "Nerdtree is load at minimal width
+let NERDTreeDirArrows = 1           "Nerdtree comes with arrow for directory
+let NERDTreeStatusline = ""         "Nerdtree does not have to have statusline
+let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
+map \ :NERDTreeToggle<CR>
+map \| :NERDTreeFind<CR>
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * wincmd p         "Jump to the main window.
+
+" Ale - Lint and Fix
+let g:ale_linters = {'jsx': ['eslint', 'flow'], 'hcl': [], 'ruby': ['ruby', 'rubocop'], 'javascript': ['eslint', 'flow'], 'python': ['flake8']}
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_fixers = {'ruby': ['rubocop']}
+"Map <ATL-r> to command ALEFix
+nnoremap ® :ALEFix<CR>
+vnoremap ® :ALEFix<CR>
+
+" Airline
+let g:airline_powerline_fonts = 1         "Use powerline font
+
+
 " Vim Hardmode
 nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 
 " AG.VIM
-"" Mapping
 let g:ag_working_path_mode="r"
-
-"" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-"" AckGrep current word
 map <leader>a :call AckGrep('')<CR>
-
-"" AckVisual current selection
 vmap <leader>a :call AckVisual()<CR>
 command! -nargs=? Ag call AckGrep(<q-args>)
 
-"" Ack current word in command mode
+""Ack current word in command mode
 function! AckGrep(word)
   let word = empty(a:word) ? expand("<cword>") : a:word
   execute "Ag ".word
@@ -224,40 +228,11 @@ function! AckVisual()
   cw
 endfunction
 
-" VIM ROBUCOP
-let g:vimrubocop_config = './.rubocop.yml'
-let g:vimrubocop_keymap = 0
-
-" VIM TEST
-nmap <silent> <leader>R :TestFile -strategy=basic<CR>
-nmap <silent> <leader>r :TestNearest -strategy=basic<CR>
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>A :TestSuite<CR>
-nmap <silent> <leader>. :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
-let test#strategy = "dispatch"
-
-" Toggles the quickfix window.
-nmap <leader>q <Plug>(qf_qf_toggle)
-
-" Ale - Syntax
-let g:ale_linters = {'jsx': ['eslint', 'flow'], 'hcl': [], 'ruby': ['ruby', 'rubocop'], 'javascript': ['eslint', 'flow'], 'python': ['flake8']}
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_fixers = {'ruby': ['rubocop']}
-
-" ALEFix - <ALT-r>
-nnoremap ® :ALEFix<CR>
-vnoremap ® :ALEFix<CR>
-
-" Airline
-let g:airline_powerline_fonts = 1
-
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor  " Use Ag over Grep
+  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_use_caching = 0  " ag is fast enough that CtrlP doesn't need to cache
+endif
 " *********************************************
 " *        Local Vimrc Customization          *
 " *********************************************
