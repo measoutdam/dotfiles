@@ -66,6 +66,10 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
+#use neovim
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi
 #########################
 # Plugins Customization #
 #########################

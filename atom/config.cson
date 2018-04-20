@@ -45,7 +45,8 @@
   "custom-title":
     template: "<%= projectName %><% if (relativeFilePath) { %>[<%= gitHead %>] -- <%= relativeFilePath %> <% } %>"
   editor:
-    fontFamily: "operator mono"
+    confirmCheckoutHeadRevision: false
+    fontFamily: "Operator mono"
     invisibles: {}
     lineHeight: 1.6
     preferredLineLength: 100
@@ -57,7 +58,7 @@
     userId: "1aa80193-7f14-4a53-97ee-f84cee4f6057"
   "fold-functions": {}
   fonts:
-    fontFamily: "PT Mono"
+    fontFamily: "DejaVu Mono"
   "git-diff":
     showIconsInEditorGutter: true
   "git-log":
