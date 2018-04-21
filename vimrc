@@ -18,7 +18,7 @@ Plugin 'haya14busa/vim-operator-flashy'
 Plugin 'Yggdroot/indentLine'
 Plugin 'gabrielelana/vim-markdown'
 Plugin 'wikitopian/hardmode'
-Plugin 'rking/ag.vim'
+"Plugin 'rking/ag.vim'
 Plugin 'Chiel92/vim-autoformat'
 Plugin 'bogado/file-line'
 Plugin 'scrooloose/nerdcommenter'
@@ -33,6 +33,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'neomake/neomake'
 Plugin 'tonekk/vim-binding-pry'
+Plugin 'qpkorr/vim-bufkill'
 call vundle#end()
 
 " *********      End of Plugins      ***********
@@ -175,7 +176,7 @@ nmap <silent> <leader>g :TestVisit<CR>
 let test#strategy = "dispatch"                                "Use Dispatch strategy, Plugin 'tpope/vim-dispatch' us required
 
 " Toggles the quickfix window.
-let g:dispatch_quickfix_height = 20
+let g:dispatch_quickfix_height = 17
 nmap <leader>q <Plug>(qf_qf_toggle)
 " NERDTree
 let NERDTreeShowHidden=1            "Nerdtree is hidden by default
@@ -206,38 +207,49 @@ tnoremap <Esc> <C-\><C-n>
 
 " Airline
 let g:airline_powerline_fonts = 1         "Use powerline font
+"" Custom color for unsaved window
+function! AirlineInit()
+  " first define a new part for modified
+  call airline#parts#define('modified', {
+    \ 'raw': '%m',
+    \ 'accent': 'red',
+    \ })
+
+  " then override the default layout for section c with your new part
+  let g:airline_section_c = airline#section#create(['%<', '%f', 'modified', ' ', 'readonly'])
+endfunction
+autocmd VimEnter * call AirlineInit()
 
 " Vim Hardmode
 nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 
-" AG.VIM
-let g:ag_working_path_mode="r"
-map <leader>a :call AckGrep('')<CR>
-vmap <leader>a :call AckVisual()<CR>
-command! -nargs=? Ag call AckGrep(<q-args>)
+" Search
+" Bind :Ag to :grep! with arg required
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
-""Ack current word in command mode
-function! AckGrep(word)
-  let word = empty(a:word) ? expand("<cword>") : a:word
-  execute "Ag ".word
-  cw
-endfunction
+" Bind a to grep word under cursor
+nnoremap <leader>a :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" Bind a to greg selected word - visual mode
+vmap <leader>a y:Ag '<C-R>"'<CR>
 
-function! AckVisual()
-  normal gv"xy
-  let escape_chars = ['(', ')']
-  for char in escape_chars
-    let @x = escape(@x, char)
-  endfor
-  execute "Ag ".shellescape(@x)
-  cw
-endfunction
+" About to execuent Ag with current word as an argument
+nnoremap <leader>A :Ag<Space>'<C-R><C-W>'
+" About to execuent Ag with current visual selected word as an argument
+vmap <leader>A y:Ag '<C-R>"'
 
+" The Silver Searcher - using ag when available
 if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor  " Use Ag over Grep
-  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_use_caching = 0  " ag is fast enough that CtrlP doesn't need to cache
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
+
+
 
 " Convert old hash to new Ruby 1.9 syntax
 map <leader>: :%s/:\(\w\+\)\(\s*=>\s*\)/\1: /gc<CR>
