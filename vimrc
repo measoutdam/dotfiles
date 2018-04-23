@@ -79,9 +79,7 @@ set background=dark
 colorscheme solarized
 
 set laststatus=2                  "Show the status line all the time
-if !has('gui_running')            "Set terminal color to 256
-  set t_Co=256
-endif
+set t_Co=256
 
 "Search
 set incsearch                     "Search: Find as you type search
@@ -158,6 +156,21 @@ map <leader>' :%s/'\([^']*\)'/"\1"/gc<CR>
 " Quick simbole =>
 imap <C-l> <Space>=><Space>
 
+" Surround the visual selection in parenthesis/brackets/etc.:
+vnoremap $1 <esc>`>a)<esc>`<i(<esc>
+vnoremap $2 <esc>`>a]<esc>`<i[<esc>
+vnoremap $3 <esc>`>a}<esc>`<i{<esc>
+vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+vnoremap $q <esc>`>a'<esc>`<i'<esc>
+
+"Quickly insert parenthesis/brackets/etc.:
+inoremap $1 ()<esc>i
+inoremap $2 []<esc>i
+inoremap $3 {}<esc>i
+inoremap $4 {<esc>o}<esc>O
+inoremap $q ''<esc>i
+inoremap $e ""<esc>i
+inoremap $t <><esc>i
 " *********************************************
 " *              Search helper                *
 " *********************************************
