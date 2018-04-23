@@ -100,3 +100,7 @@ Procfile.local
 .git
 .hg
 .svn
+
+# neomake #
+###########
+*@neomake*

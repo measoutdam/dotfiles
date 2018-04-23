@@ -1,50 +1,50 @@
-" *********************************************
-" *              Vundle Plugins                *
-" *********************************************
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-endwise'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'ervandew/supertab'
-Plugin 'kana/vim-operator-user'
-Plugin 'haya14busa/vim-operator-flashy'
-Plugin 'Yggdroot/indentLine'
-Plugin 'gabrielelana/vim-markdown'
-Plugin 'wikitopian/hardmode'
-"Plugin 'rking/ag.vim'
-Plugin 'Chiel92/vim-autoformat'
-Plugin 'bogado/file-line'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'janko-m/vim-test'
-Plugin 'tpope/vim-dispatch'
-Plugin 'romainl/vim-qf'
-"Plugin 'w0rp/ale'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'neomake/neomake'
-Plugin 'tonekk/vim-binding-pry'
-Plugin 'qpkorr/vim-bufkill'
-Plugin 'mhinz/vim-startify'
-call vundle#end()
+set nocompatible
+filetype off
 
-" *********      End of Plugins      ***********
+" *********************************************
+" *              Vundle Plugins               *
+" *********************************************
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
+call plug#begin('~/.vim/plugged')
+Plug 'VundleVim/Vundle.vim'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+Plug 'airblade/vim-gitgutter'
+Plug 'jiangmiao/auto-pairs'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ervandew/supertab'
+Plug 'kana/vim-operator-user'
+Plug 'haya14busa/vim-operator-flashy'
+Plug 'Yggdroot/indentLine'
+Plug 'gabrielelana/vim-markdown'
+Plug 'wikitopian/hardmode'
+Plug 'Chiel92/vim-autoformat'
+Plug 'bogado/file-line'
+Plug 'scrooloose/nerdcommenter'
+Plug 'altercation/vim-colors-solarized'
+Plug 'janko-m/vim-test'
+Plug 'tpope/vim-dispatch'
+Plug 'romainl/vim-qf'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'neomake/neomake'
+Plug 'tonekk/vim-binding-pry'
+Plug 'qpkorr/vim-bufkill'
+Plug 'simeji/winresizer' " To enter resizing mode : ctrl+e, and exit by enter
+Plug 'mhinz/vim-startify'
+call plug#end()
+"call vundle#end()
 
 " *********************************************
 " *               General config              *
 " *********************************************
 "Basic
-set nocompatible
-filetype off
 syntax on
 set number
 set showcmd
@@ -52,7 +52,8 @@ set autoread
 set visualbell                        "Disable sound
 let mapleader=','                     "Remap leader to ','
 set backspace=indent,eol,start        "Make backspace works like most program
-set title
+set noshowmode                        "Do not show mode
+
 "Indentation
 filetype plugin indent on
 set autoindent
@@ -82,11 +83,6 @@ if !has('gui_running')            "Set terminal color to 256
   set t_Co=256
 endif
 
-"Cursor setup - Use different cursor shapes for insert and normal Mode
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-
 "Search
 set incsearch                     "Search: Find as you type search
 set hlsearch                      "Search: Highlight search terms
@@ -106,7 +102,6 @@ autocmd InsertEnter,WinLeave * setlocal foldmethod=manual       "foldmethod must
 let g:ruby_path = system('echo $HOME/.rbenv/shims')
 set lazyredraw
 set ttyfast
-
 
 " *********************************************
 " *               Action Remapped             *
@@ -288,17 +283,24 @@ let g:neomake_serialize = 1
 let g:neomake_serialize_abort_on_error = 1
 
 " *********************************************
-" *                    Ale                    *
+" *                  Statify                  *
 " *********************************************
-" Disable for Neovim
-"let g:ale_linters = {'jsx': ['eslint', 'flow'], 'hcl': [], 'ruby': ['ruby', 'rubocop'], 'javascript': ['eslint', 'flow'], 'python': ['flake8']}
-"let g:ale_lint_on_enter = 0
-"let g:ale_lint_on_save = 1
-"let g:ale_lint_on_text_changed = 'never'
-"let g:ale_echo_msg_error_str = 'E'
-"let g:ale_echo_msg_warning_str = 'W'
-"let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-"let g:ale_fixers = {'ruby': ['rubocop']}
-""Map <ATL-r> to command ALEFix
-"nnoremap ® :ALEFix<CR>
-"vnoremap ® :ALEFix<CR>
+highlight StartifyHeader  ctermfg=77
+
+"Set custom ascii for staify
+let g:ascii = [
+\'                            _',
+\'                   __   __ (_)  _ __ __',
+\'                   \ \ / / | | |  _ ` _ `',
+\'                    \ V /  | | | | | | | |',
+\'                     \_/   |_| |_| |_| |_|',]
+
+"Align header - center
+function! s:filter_header(lines) abort
+  let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
+  let centered_lines = map(copy(a:lines),
+      \ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
+  return centered_lines
+endfunction
+
+let g:startify_custom_header = s:filter_header(startify#fortune#boxed() + g:ascii)
