@@ -14,7 +14,7 @@ git@github.com:measoutdam/dotfiles.git
 ### Fonts
  1 Normal: operator mono
  2 Non Ascii:
-    - AurulentSansMono Nerd Font Mono - Regular
+    - BitstreamVeraSansMono Nerd Font 
 # Inspired By
 ### VIM
 https://github.com/rtorr/vim-cheat-sheet

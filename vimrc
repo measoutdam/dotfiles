@@ -19,9 +19,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'roxma/nvim-completion-manager' " pip3 install --upgrade neovim
+Plug 'roxma/vim-hug-neovim-rpc' " required by nvim-completion-manager
 Plug 'kana/vim-operator-user'
 Plug 'haya14busa/vim-operator-flashy'
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine' " Conflict with nerdtree indent when web devicon is enabled
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'gabrielelana/vim-markdown'
 Plug 'wikitopian/hardmode'
 Plug 'Chiel92/vim-autoformat'
@@ -107,6 +109,9 @@ autocmd InsertEnter,WinLeave * setlocal foldmethod=manual       "foldmethod must
 let g:ruby_path = system('echo $HOME/.rbenv/shims')
 set lazyredraw
 set ttyfast
+
+" tab character
+set list listchars=tab:\ \ ,trail:·
 
 " *********************************************
 " *               Action Remapped             *
@@ -204,6 +209,10 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+"gitgutter
+let g:gitgutter_enabled = 1
+let g:gitgutter_async = 1
+let g:gitgutter_realtime = 1
 " *********************************************
 " *       Toggles the quickfix window.        *
 " *********************************************
@@ -227,15 +236,12 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|.git\|tmp\|.bundle\|vendor/
 " *********************************************
 " *                 IndenLine                  *
 " *********************************************
-set list listchars=tab:\ \ ,trail:·
-let g:indentLine_enabled = 1
-let g:indentLine_char = '│'
-let g:indentLine_color_term = 0
-let g:indentLine_faster = 1
-let g:indentLine_indentLevel = 8
-"conflicy with devicons
-let g:indentLine_leadingSpaceChar = '·'
-map <leader>I :IndentLinesToggle<CR>
+"let g:indentLine_enabled = 1
+"let g:indentLine_char = '│'
+"let g:indentLine_color_term = 0
+"let g:indentLine_faster = 1
+"let g:indentLine_indentLevel = 8
+"map <leader>I :IndentLinesToggle<CR>
 
 " *********************************************
 " *                 Vim Test                  *
@@ -253,7 +259,7 @@ let test#strategy = "dispatch"        "Use Dispatch strategy, Plugin 'tpope/vim-
 " *********************************************
 " *                 Airline                   *
 " *********************************************
-let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 "" Custom color for unsaved window
 function! AirlineInit()
   " first define a new part for modified
@@ -355,9 +361,8 @@ let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 let g:DevIconsDefaultFolderOpenSymbol = ''
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
-    call webdevicons#refresh()
+  call webdevicons#refresh()
 endif
-let appendArtifactFix = 1
 " *********************************************
 " *                 NERDTree                  *
 " *********************************************
@@ -367,6 +372,8 @@ let NERDTreeStatusline = ""         "Nerdtree does not have to have statusline
 let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
 map \ :NERDTreeToggle<CR>
 map \| :NERDTreeFind<CR>
+" Overring Directory color
+hi Directory guifg=#FF0000 ctermfg=73
 " Override the color of arrow to background
 highlight NERDTreeOpenable ctermfg=bg
 highlight NERDTreeClosable ctermfg=bg
@@ -374,3 +381,9 @@ highlight NERDTreeClosable ctermfg=bg
 autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
 " Hide slashes after each directory node.
 autocmd FileType nerdtree syntax match NERDTreeDirSlash #/$# conceal containedin=NERDTreeDir contained
+
+" vim-indent-guides
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
+map <leader>I :IndentGuidesToggle<CR>

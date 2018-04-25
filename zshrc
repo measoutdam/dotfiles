@@ -52,7 +52,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-export EDITOR=vim
+export EDITOR=nvim
 export PATH="$(brew --prefix qt@5.5)/bin:$PATH"
 export PATH=$PATH:/Users/measoutdam/bin/
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"

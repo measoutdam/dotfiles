@@ -70,8 +70,7 @@
   "linter-rubocop":
     command: "/Users/measoutdam/.rbenv/shims/rubocop"
   "linter-scss-lint": {}
-  "linter-ui-default":
-    panelHeight: 205
+  "linter-ui-default": {}
   "platformio-ide-terminal":
     core: {}
     style:
