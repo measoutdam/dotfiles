@@ -1,6 +1,5 @@
 set nocompatible
 filetype off
-
 " *********************************************
 " *              Vundle Plugins               *
 " *********************************************
@@ -22,7 +21,6 @@ Plug 'roxma/nvim-completion-manager' " pip3 install --upgrade neovim
 Plug 'roxma/vim-hug-neovim-rpc' " required by nvim-completion-manager
 Plug 'kana/vim-operator-user'
 Plug 'haya14busa/vim-operator-flashy'
-"Plug 'Yggdroot/indentLine' " Conflict with nerdtree indent when web devicon is enabled
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'gabrielelana/vim-markdown'
 Plug 'wikitopian/hardmode'
@@ -44,6 +42,7 @@ Plug 'mhinz/vim-startify'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'junegunn/goyo.vim'
 call plug#end()
 "call vundle#end()
 
@@ -52,6 +51,7 @@ call plug#end()
 " *********************************************
 "Basic
 syntax on
+set numberwidth=4
 set number
 set showcmd
 set autoread
@@ -59,7 +59,9 @@ set visualbell                        "Disable sound
 let mapleader=','                     "Remap leader to ','
 set backspace=indent,eol,start        "Make backspace works like most program
 set noshowmode                        "Do not show mode
-
+" windows
+set fillchars+=vert:\|
+hi VertSplit guifg=fg guibg=bg gui=NONE
 "Indentation
 filetype plugin indent on
 set autoindent
@@ -69,7 +71,7 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set expandtab
-
+set signcolumn=yes
 "Display tabs and trailing spaces visually
 set nowrap       "Don't wrap lines
 set linebreak    "Wrap lines at convenient points
@@ -234,16 +236,6 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|.git\|tmp\|.bundle\|vendor/ruby'
 
 " *********************************************
-" *                 IndenLine                  *
-" *********************************************
-"let g:indentLine_enabled = 1
-"let g:indentLine_char = '│'
-"let g:indentLine_color_term = 0
-"let g:indentLine_faster = 1
-"let g:indentLine_indentLevel = 8
-"map <leader>I :IndentLinesToggle<CR>
-
-" *********************************************
 " *                 Vim Test                  *
 " *********************************************
 nmap <silent> <leader>R :TestFile -strategy=basic<CR>
@@ -344,6 +336,10 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " *********************************************
+" *           nerdtree-git-plugin             *
+" *********************************************
+" NERDTree Git
+" *********************************************
 " *                 DevIcons                  *
 " *********************************************
 " Enable open and close folder glyph flags.
@@ -356,34 +352,45 @@ let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 
 " Set default file and directory icons.
-let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = ''
-let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-let g:DevIconsDefaultFolderOpenSymbol = ''
+"let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = "\uf000"
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = "\uf07b " "'
+let g:DevIconsDefaultFolderOpenSymbol ="\uf07c " "''
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
+
 " *********************************************
 " *                 NERDTree                  *
 " *********************************************
 let NERDTreeShowHidden=1            "Nerdtree is hidden by default
 let NERDTreeMinimalUI=1
-let NERDTreeStatusline = ""         "Nerdtree does not have to have statusline
+let NERDTreeStatusline = "" "Nerdtree does not have to have statusline
 let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
+
 map \ :NERDTreeToggle<CR>
 map \| :NERDTreeFind<CR>
+
 " Overring Directory color
-hi Directory guifg=#FF0000 ctermfg=73
-" Override the color of arrow to background
-highlight NERDTreeOpenable ctermfg=bg
-highlight NERDTreeClosable ctermfg=bg
+highlight Directory guifg=#FF0000 ctermfg=73
+
+" Set nerdtree arrow to invisible
+let NERDTreeDirArrowExpandable = "\u00a0"
+let NERDTreeDirArrowCollapsible = "\u00a0"
+" Chang arrow
+"let NERDTreeDirArrowExpandable = "▹"
+"let NERDTreeDirArrowCollapsible = "▿"
 " Hide current working directory line.
 autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
+
 " Hide slashes after each directory node.
 autocmd FileType nerdtree syntax match NERDTreeDirSlash #/$# conceal containedin=NERDTreeDir contained
 
-" vim-indent-guides
+" *********************************************
+" *             vim-indent-guides             *
+" *********************************************
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
+let g:NERDTreeWinSize=45
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
 map <leader>I :IndentGuidesToggle<CR>

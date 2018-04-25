@@ -5,6 +5,7 @@ rsync ~/.aliases $DOTFILES/aliases --inplace
 rsync ~/.tmux.conf $DOTFILES/tmux.conf --inplace
 rsync -d ~/tmuxifier/templates $DOTFILES/tmuxifier/templates --inplace
 rsync -d ~/tmuxifier/layouts $DOTFILES/tmuxifier/layouts --inplace
+rsync -d ~/.vim/plugged/vim-devicons/plugin/webdevicons.vim $DOTFILES/.vim/plugged/vim-devicons/plugin/webdevicons.vim --inplace
 rsync ~/.gitconfig $DOTFILES/gitconfig --inplace
 rsync ~/.gitignore_global $DOTFILES/gitignore_global --inplace
 rsync ~/.atom/config.cson $DOTFILES/atom/config.cson --inplace
