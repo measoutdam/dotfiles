@@ -38,6 +38,9 @@ Plug 'tonekk/vim-binding-pry'
 Plug 'qpkorr/vim-bufkill'
 Plug 'simeji/winresizer' " To enter resizing mode : ctrl+e, and exit by enter
 Plug 'mhinz/vim-startify'
+Plug 'terryma/vim-smooth-scroll'
+Plug 'edkolev/tmuxline.vim'
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 "call vundle#end()
 
@@ -53,6 +56,7 @@ set visualbell                        "Disable sound
 let mapleader=','                     "Remap leader to ','
 set backspace=indent,eol,start        "Make backspace works like most program
 set noshowmode                        "Do not show mode
+set encoding=UTF-8
 
 "Indentation
 filetype plugin indent on
@@ -241,6 +245,7 @@ nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>A :TestSuite<CR>
 nmap <silent> <leader>. :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
+let test#ruby#rspec#executable = "./bin/rspec"
 let test#strategy = "dispatch"        "Use Dispatch strategy, Plugin 'tpope/vim-dispatch' us required
 
 " *********************************************
@@ -259,7 +264,7 @@ autocmd StdinReadPre * let s:std_in=1
 " *                 Airline                   *
 " *********************************************
 let g:airline_powerline_fonts = 1         "Use powerline font
-
+let g:airline#extensions#tabline#enabled = 1
 "" Custom color for unsaved window
 function! AirlineInit()
   " first define a new part for modified
@@ -317,3 +322,20 @@ function! s:filter_header(lines) abort
 endfunction
 
 let g:startify_custom_header = s:filter_header(startify#fortune#boxed() + g:ascii)
+
+" *********************************************
+" *               Smooth scroll               *
+" *********************************************
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+
+" *********************************************
+" *                  TmuxLine                 *
+" *********************************************
+let g:tmuxline_preset = {
+      \'a'    : '❐ Tmux',
+      \'b'    : '#S',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '%A',
+      \'y'    : '%R' }
