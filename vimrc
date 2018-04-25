@@ -15,8 +15,10 @@ Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'ervandew/supertab'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'roxma/nvim-completion-manager' " pip3 install --upgrade neovim
 Plug 'kana/vim-operator-user'
 Plug 'haya14busa/vim-operator-flashy'
 Plug 'Yggdroot/indentLine'
@@ -24,7 +26,6 @@ Plug 'gabrielelana/vim-markdown'
 Plug 'wikitopian/hardmode'
 Plug 'Chiel92/vim-autoformat'
 Plug 'bogado/file-line'
-Plug 'scrooloose/nerdcommenter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'janko-m/vim-test'
 Plug 'tpope/vim-dispatch'
@@ -56,7 +57,6 @@ set visualbell                        "Disable sound
 let mapleader=','                     "Remap leader to ','
 set backspace=indent,eol,start        "Make backspace works like most program
 set noshowmode                        "Do not show mode
-set encoding=UTF-8
 
 "Indentation
 filetype plugin indent on
@@ -78,12 +78,15 @@ set nobackup
 set nowb
 
 "Color Scheme and other UI
-syntax enable
+"syntax enable
 set background=dark
 colorscheme solarized
 
 set laststatus=2                  "Show the status line all the time
 set t_Co=256
+
+""Set color of '~' in End of Buffer to the same as background color
+highlight EndOfBuffer ctermfg=bg ctermbg=bg
 
 "Search
 set incsearch                     "Search: Find as you type search
@@ -220,7 +223,6 @@ let g:ctrlp_match_window = 'max:10'         "max item in matched list
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   "for Linux/MacOSX
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|.git\|tmp\|.bundle\|vendor/ruby'
-let g:ctrlp_dont_split = 'nerdtree'
 
 " *********************************************
 " *                 IndenLine                  *
@@ -231,7 +233,7 @@ let g:indentLine_char = '│'
 let g:indentLine_color_term = 0
 let g:indentLine_faster = 1
 let g:indentLine_indentLevel = 8
-let g:indentLine_leadingSpaceEnabled = 1
+"conflicy with devicons
 let g:indentLine_leadingSpaceChar = '·'
 map <leader>I :IndentLinesToggle<CR>
 
@@ -249,21 +251,8 @@ let test#ruby#rspec#executable = "./bin/rspec"
 let test#strategy = "dispatch"        "Use Dispatch strategy, Plugin 'tpope/vim-dispatch' us required
 
 " *********************************************
-" *                 NERDTree                  *
-" *********************************************
-let NERDTreeShowHidden=1            "Nerdtree is hidden by default
-let NERDTreeMinimalUI = 1           "Nerdtree is load at minimal width
-let NERDTreeDirArrows = 1           "Nerdtree comes with arrow for directory
-let NERDTreeStatusline = ""         "Nerdtree does not have to have statusline
-let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
-map \ :NERDTreeToggle<CR>
-map \| :NERDTreeFind<CR>
-autocmd StdinReadPre * let s:std_in=1
-
-" *********************************************
 " *                 Airline                   *
 " *********************************************
-let g:airline_powerline_fonts = 1         "Use powerline font
 let g:airline#extensions#tabline#enabled = 1
 "" Custom color for unsaved window
 function! AirlineInit()
@@ -332,6 +321,7 @@ noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 " *********************************************
 " *                  TmuxLine                 *
 " *********************************************
+let g:tmuxline_powerline_separators = 0
 let g:tmuxline_preset = {
       \'a'    : '❐ Tmux',
       \'b'    : '#S',
@@ -339,3 +329,48 @@ let g:tmuxline_preset = {
       \'cwin' : '#I #W',
       \'x'    : '%A',
       \'y'    : '%R' }
+
+" *********************************************
+" *           nvim-completion-manager         *
+" *********************************************
+" When using tab to navigate the suggestions
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" *********************************************
+" *                 DevIcons                  *
+" *********************************************
+" Enable open and close folder glyph flags.
+let g:DevIconsEnableFoldersOpenClose = v:true
+
+" Enable folder glyph flag.
+let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
+
+" Use one space after a glyph instead of two.
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+
+" Set default file and directory icons.
+let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = ''
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:DevIconsDefaultFolderOpenSymbol = ''
+" after a re-source, fix syntax matching issues (concealing brackets):
+if exists('g:loaded_webdevicons')
+    call webdevicons#refresh()
+endif
+let appendArtifactFix = 1
+" *********************************************
+" *                 NERDTree                  *
+" *********************************************
+let NERDTreeShowHidden=1            "Nerdtree is hidden by default
+let NERDTreeMinimalUI=1
+let NERDTreeStatusline = ""         "Nerdtree does not have to have statusline
+let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
+map \ :NERDTreeToggle<CR>
+map \| :NERDTreeFind<CR>
+" Override the color of arrow to background
+highlight NERDTreeOpenable ctermfg=bg
+highlight NERDTreeClosable ctermfg=bg
+" Hide current working directory line.
+autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
+" Hide slashes after each directory node.
+autocmd FileType nerdtree syntax match NERDTreeDirSlash #/$# conceal containedin=NERDTreeDir contained
