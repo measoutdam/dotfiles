@@ -70,6 +70,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if type nvim > /dev/null 2>&1; then
   alias vim='nvim'
 fi
+alias vi = '/usr/local/bin/vim'
 #########################
 # Plugins Customization #
 #########################

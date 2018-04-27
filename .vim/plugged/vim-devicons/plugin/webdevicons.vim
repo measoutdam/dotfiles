@@ -227,7 +227,7 @@ function! s:setDictionaries()
         \ 'json'     : '',
         \ 'js'       : '',
         \ 'jsx'      : '',
-        \ 'rb'       : '',
+        \ 'rb'       : '',
         \ 'php'      : '',
         \ 'py'       : '',
         \ 'pyc'      : '',
@@ -307,7 +307,6 @@ function! s:setDictionaries()
         \ 'tsx'      : '',
         \ 'jl'       : '',
         \ 'pp'       : '',
-        \ 'lock'  : "\uf720",
         \ 'vue'      : '﵂'
         \}
 
@@ -322,13 +321,12 @@ function! s:setDictionaries()
         \ 'gulpfile.ls'                      : '',
         \ 'dropbox'                          : '',
         \ '.ds_store'                        : '',
-        \ 'Gemfile'                          : "\ue605",
-        \ '.env'                             : "\ue7ad",
-        \ '.rspec'                           : "ﭧ",
-        \ 'spec'                             : "ﭧ",
-        \ '.travis.yml'                      : "\ue77e",
+        \ '.env'                             : '',
+        \ '.rspec'                           : 'ﭧ',
+        \ 'spec'                             : 'ﭧ',
+        \ '.travis.yml'                      : '',
         \ '.gitconfig'                       : '',
-        \ '.gitignore'                       : "\uf09b",
+        \ '.gitignore'                       : '',
         \ '.bashrc'                          : '',
         \ '.zshrc'                           : '',
         \ '.vimrc'                           : '',
@@ -343,6 +341,8 @@ function! s:setDictionaries()
         \ 'procfile'                         : '',
         \ 'dockerfile'                       : '',
         \ 'docker-compose.yml'               : '',
+        \ 'cron.yaml'                        : '',
+        \ 'yarn.lock'                        : "",
         \}
 
   let s:file_node_pattern_matches = {
@@ -354,7 +354,6 @@ function! s:setDictionaries()
         \ '.*materialize.*\.css$' : '',
         \ '.*mootools.*\.js$'     : '',
         \ '.*vimrc.*'             : '',
-        \ '*Gemfile*'             : "\ue605",
         \ 'Vagrantfile$'          : ''
         \}
 

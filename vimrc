@@ -56,22 +56,26 @@ set number
 set showcmd
 set autoread
 set visualbell                        "Disable sound
-let mapleader=','                     "Remap leader to ','
 set backspace=indent,eol,start        "Make backspace works like most program
 set noshowmode                        "Do not show mode
-" windows
+set nopaste
+let mapleader=','                     "Remap leader to ','
+"Vim windows
 set fillchars+=vert:\|
 hi VertSplit guifg=fg guibg=bg gui=NONE
+
 "Indentation
 filetype plugin indent on
 set autoindent
 set smartindent
 set smarttab
+set expandtab
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set expandtab
 set signcolumn=yes
+
 "Display tabs and trailing spaces visually
 set nowrap       "Don't wrap lines
 set linebreak    "Wrap lines at convenient points
@@ -113,7 +117,7 @@ set lazyredraw
 set ttyfast
 
 " tab character
-set list listchars=tab:\ \ ,trail:·
+set list listchars=tab:\ \ ,trail:∙
 
 " *********************************************
 " *               Action Remapped             *
@@ -200,21 +204,18 @@ vmap <leader>a y:Ag '<C-R>"'<CR>
 nnoremap <leader>A :Ag<Space>'<C-R><C-W>'
 " About to execuent Ag with current visual selected word as an argument
 vmap <leader>A y:Ag '<C-R>"'
+nnoremap <leader>FR :call FindAndReplace('','')
+function FindAndReplace(pattern, replace)
+  let pattern = a:pattern
+  let replace = a:replace
+  execute "Ag ".pattern." | cdo %s/".pattern."/".replace."/ge | update"
+endfunction
+" *********************************************
+"                  gitgutter                  *
+" *********************************************
+" reduce updatetime to miliseconds
+set updatetime=0
 
-" The Silver Searcher - using ag when available
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-"gitgutter
-let g:gitgutter_enabled = 1
-let g:gitgutter_async = 1
-let g:gitgutter_realtime = 1
 " *********************************************
 " *       Toggles the quickfix window.        *
 " *********************************************
@@ -234,6 +235,17 @@ let g:ctrlp_match_window = 'max:10'         "max item in matched list
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   "for Linux/MacOSX
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|.git\|tmp\|.bundle\|vendor/ruby'
+
+" The Silver Searcher - using ag when available
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 
 " *********************************************
 " *                 Vim Test                  *
@@ -273,8 +285,13 @@ nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
 " *********************************************
 " *          Asynchronous Checkers            *
 " *********************************************
-"" When writing a buffer (no delay).
+" Hide sign on sing column
+let g:neomake_place_signs=0
+
+" When writing a buffer (no delay).
+
 call neomake#configure#automake('w')
+
 " Run NeoMake on read and write operations
 autocmd! BufReadPost,BufWritePost * Neomake
 
@@ -353,12 +370,21 @@ let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 
 " Set default file and directory icons.
 "let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = "\uf000"
-let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = "\uf07b " "'
-let g:DevIconsDefaultFolderOpenSymbol ="\uf07c " "''
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ' ' " '
+let g:DevIconsDefaultFolderOpenSymbol =' ' " 
+
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
+
+" Remaped keys
+let g:NERDTreeMapCloseDir = 'h'
+let g:NERDTreeMapCloseChildren = 'H'
+let g:NERDTreeMapRefresh = 'r'
+let g:NERDTreeMapRefreshRoot = 'R'
+let g:NERDTreeMapOpenSplit = 'sp'
+let g:NERDTreeMapOpenVSplit = 'vs'
 
 " *********************************************
 " *                 NERDTree                  *
@@ -366,7 +392,7 @@ endif
 let NERDTreeShowHidden=1            "Nerdtree is hidden by default
 let NERDTreeMinimalUI=1
 let NERDTreeStatusline = "" "Nerdtree does not have to have statusline
-let NERDTreeIgnore = ['\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
+let NERDTreeIgnore = ['yarn-error.log', 'rspec_examples.txt', '\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
 
 map \ :NERDTreeToggle<CR>
 map \| :NERDTreeFind<CR>
@@ -394,3 +420,4 @@ let g:indent_guides_guide_size = 1
 let g:NERDTreeWinSize=45
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
 map <leader>I :IndentGuidesToggle<CR>
+
