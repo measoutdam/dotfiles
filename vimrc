@@ -60,6 +60,7 @@ set backspace=indent,eol,start        "Make backspace works like most program
 set noshowmode                        "Do not show mode
 set nopaste
 let mapleader=','                     "Remap leader to ','
+
 "Vim windows
 set fillchars+=vert:\|
 hi VertSplit guifg=fg guibg=bg gui=NONE
@@ -156,9 +157,6 @@ nnoremap <leader>d "_d
 " Leave Terminal mode to Normal mode
 tnoremap <Esc> <C-\><C-n>
 
-" Toggle folding
-nnoremap <leader>f za
-
 " indent/unindent visual mode selection with tab/shift+tab
 vmap <tab> >gv
 vmap <s-tab> <gv
@@ -171,45 +169,49 @@ map <leader>: :%s/:\(\w\+\)\(\s*=>\s*\)/\1: /gc<CR>
 " Convert ' to "
 map <leader>' :%s/'\([^']*\)'/"\1"/gc<CR>
 
-" Quick simbole =>
-imap <C-l> <Space>=><Space>
-
-" Surround the visual selection in parenthesis/brackets/etc.:
-vnoremap $1 <esc>`>a)<esc>`<i(<esc>
-vnoremap $2 <esc>`>a]<esc>`<i[<esc>
-vnoremap $3 <esc>`>a}<esc>`<i{<esc>
-vnoremap $$ <esc>`>a"<esc>`<i"<esc>
-vnoremap $q <esc>`>a'<esc>`<i'<esc>
-
-"Quickly insert parenthesis/brackets/etc.:
-inoremap $1 ()<esc>i
-inoremap $2 []<esc>i
-inoremap $3 {}<esc>i
-inoremap $4 {<esc>o}<esc>O
-inoremap $q ''<esc>i
-inoremap $e ""<esc>i
-inoremap $t <><esc>i
 " *********************************************
 " *              Search helper                *
 " *********************************************
+" The Silver Searcher - using ag when available
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
 " Bind :Ag to :grep! with arg required
-command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+command! -nargs=+ -complete=file Ag silent! grep! <args>|cwindow|redraw!
 
 " Bind a to grep word under cursor
-nnoremap <leader>a :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <leader>f :Ag "\b<C-R><C-W>\b"<CR>
+
 " Bind a to greg selected word - visual mode
-vmap <leader>a y:Ag '<C-R>"'<CR>
+vmap <leader>f y:Ag '<C-R>"'<CR>
 
 " About to execuent Ag with current word as an argument
-nnoremap <leader>A :Ag<Space>'<C-R><C-W>'
+nnoremap <leader>F :Ag<Space>'<C-R><C-W>'
+
 " About to execuent Ag with current visual selected word as an argument
-vmap <leader>A y:Ag '<C-R>"'
-nnoremap <leader>FR :call FindAndReplace('','')
-function FindAndReplace(pattern, replace)
+vmap <leader>F y:Ag '<C-R>"'
+
+" About to execute FindReplace in normal mode
+nnoremap <leader>/ :call FindReplace('<C-R><C-W>','')
+" About to execute FindReplace in visual mode
+vmap <leader>/ y:call FindReplace('<C-R>"','')
+
+function! FindReplace(pattern,replace,...)
   let pattern = a:pattern
   let replace = a:replace
-  execute "Ag ".pattern." | cdo %s/".pattern."/".replace."/ge | update"
+  let scope = a:0 >= 1 ? " -G ".a:1 : ""
+  execute "Ag '".pattern."'".scope
+  execute "cdo %s/".pattern."/".replace."/ge | update"
 endfunction
+
 " *********************************************
 "                  gitgutter                  *
 " *********************************************
@@ -235,16 +237,6 @@ let g:ctrlp_match_window = 'max:10'         "max item in matched list
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   "for Linux/MacOSX
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|.git\|tmp\|.bundle\|vendor/ruby'
-
-" The Silver Searcher - using ag when available
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
 
 
 " *********************************************
@@ -359,7 +351,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " *********************************************
 " *                 DevIcons                  *
 " *********************************************
-" Enable open and close folder glyph flags.
+let g:NERDTreeHighlightFolders = 1
 let g:DevIconsEnableFoldersOpenClose = v:true
 
 " Enable folder glyph flag.
@@ -368,34 +360,43 @@ let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
 " Use one space after a glyph instead of two.
 let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 
-" Set default file and directory icons.
-"let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = "\uf000"
-let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ' ' " '
-let g:DevIconsDefaultFolderOpenSymbol =' ' " 
-
 " after a re-source, fix syntax matching issues (concealing brackets):
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
 
-" Remaped keys
-let g:NERDTreeMapCloseDir = 'h'
-let g:NERDTreeMapCloseChildren = 'H'
-let g:NERDTreeMapRefresh = 'r'
-let g:NERDTreeMapRefreshRoot = 'R'
-let g:NERDTreeMapOpenSplit = 'sp'
-let g:NERDTreeMapOpenVSplit = 'vs'
+" Custom colors
+let s:rspec_red = 'FE405F'
+let s:git_orange = 'F54D27'
+let s:yarn_blue = '488DB7'
+let s:travis_green = '39AA56'
+
+let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange
+let g:NERDTreeExactMatchHighlightColor['yarn.lock'] = s:yarn_blue
+let g:NERDTreeExactMatchHighlightColor['.travis.yml'] = s:travis_green
+let g:NERDTreeExactMatchHighlightColor['spec'] = s:rspec_red
+
+let g:NERDTreePatternMatchHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreePatternMatchHighlightColor['spec/*'] = s:rspec_red " sets the color for files ending with _spec.rb
 
 " *********************************************
 " *                 NERDTree                  *
 " *********************************************
 let NERDTreeShowHidden=1            "Nerdtree is hidden by default
 let NERDTreeMinimalUI=1
-let NERDTreeStatusline = "" "Nerdtree does not have to have statusline
+let NERDTreeStatusline = ""         "Nerdtree does not have to have statusline
 let NERDTreeIgnore = ['yarn-error.log', 'rspec_examples.txt', '\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
 
+" Remaped keys
 map \ :NERDTreeToggle<CR>
 map \| :NERDTreeFind<CR>
+let g:NERDTreeMapCloseDir = 'h'
+let g:NERDTreeMapCloseChildren = 'H'
+let g:NERDTreeMapRefresh = 'r'
+let g:NERDTreeMapRefreshRoot = 'R'
+let g:NERDTreeMapOpenSplit = 'sp'
+let g:NERDTreeMapOpenVSplit = 'vs'
 
 " Overring Directory color
 highlight Directory guifg=#FF0000 ctermfg=73
@@ -406,6 +407,7 @@ let NERDTreeDirArrowCollapsible = "\u00a0"
 " Chang arrow
 "let NERDTreeDirArrowExpandable = "▹"
 "let NERDTreeDirArrowCollapsible = "▿"
+
 " Hide current working directory line.
 autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
 

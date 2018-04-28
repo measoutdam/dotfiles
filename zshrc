@@ -63,14 +63,10 @@ eval "$(tmuxifier init -)"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
-#use neovim
-if type nvim > /dev/null 2>&1; then
-  alias vim='nvim'
-fi
-alias vi = '/usr/local/bin/vim'
 #########################
 # Plugins Customization #
 #########################
