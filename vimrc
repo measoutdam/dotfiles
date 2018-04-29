@@ -3,8 +3,6 @@ filetype off
 " *********************************************
 " *              Vundle Plugins               *
 " *********************************************
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
 call plug#begin('~/.vim/plugged')
 Plug 'VundleVim/Vundle.vim'
 Plug 'tpope/vim-rails'
@@ -44,13 +42,13 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/goyo.vim'
 call plug#end()
-"call vundle#end()
 
 " *********************************************
 " *               General config              *
 " *********************************************
 "Basic
 syntax on
+set updatetime=0                      " reduce updatetime to miliseconds - helpful for gitguter
 set numberwidth=4
 set number
 set showcmd
@@ -209,14 +207,8 @@ function! FindReplace(pattern,replace,...)
   let replace = a:replace
   let scope = a:0 >= 1 ? " -G ".a:1 : ""
   execute "Ag '".pattern."'".scope
-  execute "cdo %s/".pattern."/".replace."/ge | update"
+  execute "cdo %s/".pattern."/".replace."/gc | update"
 endfunction
-
-" *********************************************
-"                  gitgutter                  *
-" *********************************************
-" reduce updatetime to miliseconds
-set updatetime=0
 
 " *********************************************
 " *       Toggles the quickfix window.        *
@@ -224,24 +216,9 @@ set updatetime=0
 let g:dispatch_quickfix_height = 17
 nmap <leader>q <Plug>(qf_qf_toggle)
 
-" *********************************************
 " *           Vim Operator Flashy             *
-" *********************************************
-map y <Plug>(operator-flashy)
-nmap Y <Plug>(operator-flashy)$
 
-" *********************************************
-" *                  Ctrlp                    *
-" *********************************************
-let g:ctrlp_match_window = 'max:10'         "max item in matched list
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*   "for Linux/MacOSX
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|.git\|tmp\|.bundle\|vendor/ruby'
-
-
-" *********************************************
 " *                 Vim Test                  *
-" *********************************************
 nmap <silent> <leader>R :TestFile -strategy=basic<CR>
 nmap <silent> <leader>r :TestNearest -strategy=basic<CR>
 nmap <silent> <leader>t :TestNearest<CR>
@@ -252,174 +229,22 @@ nmap <silent> <leader>g :TestVisit<CR>
 let test#ruby#rspec#executable = "./bin/rspec"
 let test#strategy = "dispatch"        "Use Dispatch strategy, Plugin 'tpope/vim-dispatch' us required
 
-" *********************************************
-" *                 Airline                   *
-" *********************************************
-let g:airline_powerline_fonts = 1
-"" Custom color for unsaved window
-function! AirlineInit()
-  " first define a new part for modified
-  call airline#parts#define('modified', {
-    \ 'raw': '%m',
-    \ 'accent': 'red',
-    \ })
-
-  " then override the default layout for section c with your new part
-  let g:airline_section_c = airline#section#create(['%<', '%f', 'modified', ' ', 'readonly'])
-endfunction
-autocmd VimEnter * call AirlineInit()
-
-" *********************************************
-" *             Vim Hardmode                  *
-" *********************************************
-nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
-
-" *********************************************
-" *          Asynchronous Checkers            *
-" *********************************************
-" Hide sign on sing column
-let g:neomake_place_signs=0
-
-" When writing a buffer (no delay).
-
-call neomake#configure#automake('w')
-
-" Run NeoMake on read and write operations
-autocmd! BufReadPost,BufWritePost * Neomake
-
-" Disable inherited syntastic
-let g:syntastic_mode_map = {
-  \ "mode": "passive",
-  \ "active_filetypes": [],
-  \ "passive_filetypes": [] }
-
-let g:neomake_serialize = 1
-let g:neomake_serialize_abort_on_error = 1
-
-" *********************************************
-" *                  Statify                  *
-" *********************************************
-highlight StartifyHeader  ctermfg=77
-
-"Set custom ascii for staify
-let g:ascii = [
-\'                            _',
-\'                   __   __ (_)  _ __ __',
-\'                   \ \ / / | | |  _ ` _ `',
-\'                    \ V /  | | | | | | | |',
-\'                     \_/   |_| |_| |_| |_|',]
-
-"Align header - center
-function! s:filter_header(lines) abort
-  let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
-  let centered_lines = map(copy(a:lines),
-      \ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
-  return centered_lines
-endfunction
-
-let g:startify_custom_header = s:filter_header(startify#fortune#boxed() + g:ascii)
-
-" *********************************************
 " *               Smooth scroll               *
-" *********************************************
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 
-" *********************************************
-" *                  TmuxLine                 *
-" *********************************************
-let g:tmuxline_powerline_separators = 0
-let g:tmuxline_preset = {
-      \'a'    : '❐ Tmux',
-      \'b'    : '#S',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : '%A',
-      \'y'    : '%R' }
 
-" *********************************************
-" *           nvim-completion-manager         *
-" *********************************************
+" *         Vim Completions Manager           *
 " When using tab to navigate the suggestions
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" *********************************************
-" *           nerdtree-git-plugin             *
-" *********************************************
-" NERDTree Git
-" *********************************************
-" *                 DevIcons                  *
-" *********************************************
-let g:NERDTreeHighlightFolders = 1
-let g:DevIconsEnableFoldersOpenClose = v:true
 
-" Enable folder glyph flag.
-let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
-
-" Use one space after a glyph instead of two.
-let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-
-" after a re-source, fix syntax matching issues (concealing brackets):
-if exists('g:loaded_webdevicons')
-  call webdevicons#refresh()
-endif
-
-" Custom colors
-let s:rspec_red = 'FE405F'
-let s:git_orange = 'F54D27'
-let s:yarn_blue = '488DB7'
-let s:travis_green = '39AA56'
-
-let g:NERDTreeExactMatchHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreeExactMatchHighlightColor['.gitignore'] = s:git_orange
-let g:NERDTreeExactMatchHighlightColor['yarn.lock'] = s:yarn_blue
-let g:NERDTreeExactMatchHighlightColor['.travis.yml'] = s:travis_green
-let g:NERDTreeExactMatchHighlightColor['spec'] = s:rspec_red
-
-let g:NERDTreePatternMatchHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreePatternMatchHighlightColor['spec/*'] = s:rspec_red " sets the color for files ending with _spec.rb
-
-" *********************************************
-" *                 NERDTree                  *
-" *********************************************
-let NERDTreeShowHidden=1            "Nerdtree is hidden by default
-let NERDTreeMinimalUI=1
-let NERDTreeStatusline = ""         "Nerdtree does not have to have statusline
-let NERDTreeIgnore = ['yarn-error.log', 'rspec_examples.txt', '\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
-
-" Remaped keys
-map \ :NERDTreeToggle<CR>
-map \| :NERDTreeFind<CR>
-let g:NERDTreeMapCloseDir = 'h'
-let g:NERDTreeMapCloseChildren = 'H'
-let g:NERDTreeMapRefresh = 'r'
-let g:NERDTreeMapRefreshRoot = 'R'
-let g:NERDTreeMapOpenSplit = 'sp'
-let g:NERDTreeMapOpenVSplit = 'vs'
-
-" Overring Directory color
-highlight Directory guifg=#FF0000 ctermfg=73
-
-" Set nerdtree arrow to invisible
-let NERDTreeDirArrowExpandable = "\u00a0"
-let NERDTreeDirArrowCollapsible = "\u00a0"
-" Chang arrow
-"let NERDTreeDirArrowExpandable = "▹"
-"let NERDTreeDirArrowCollapsible = "▿"
-
-" Hide current working directory line.
-autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
-
-" Hide slashes after each directory node.
-autocmd FileType nerdtree syntax match NERDTreeDirSlash #/$# conceal containedin=NERDTreeDir contained
-
-" *********************************************
-" *             vim-indent-guides             *
-" *********************************************
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-let g:NERDTreeWinSize=45
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
-map <leader>I :IndentGuidesToggle<CR>
-
+source ~/.vim/custom/vim-operator-flashy.vim
+source ~/.vim/custom/ctrlp.vim
+source ~/.vim/custom/vim-airline.vim
+source ~/.vim/custom/vim-startify.vim
+source ~/.vim/custom/tmux-line.vim
+source ~/.vim/custom/vim-devicons.vim
+source ~/.vim/custom/nerdtree.vim
+source ~/.vim/custom/vim-indent-guides.vim
