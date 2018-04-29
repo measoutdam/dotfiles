@@ -1,4 +1,5 @@
-let g:airline_powerline_fonts = 1
+"let g:airline_powerline_fonts = 1
+autocmd VimEnter * call AirlineInit()
 
 function! AirlineInit()
   " first define a new part for modified
@@ -11,4 +12,3 @@ function! AirlineInit()
   " then override the default layout for section c with your new part
   let g:airline_section_c = airline#section#create(['%<', '%f', 'modified', ' ', 'readonly'])
 endfunction
-autocmd VimEnter * call AirlineInit()

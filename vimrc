@@ -1,46 +1,54 @@
 set nocompatible
-filetype off
-" *********************************************
+filetype off " *********************************************
 " *              Vundle Plugins               *
 " *********************************************
 call plug#begin('~/.vim/plugged')
-Plug 'VundleVim/Vundle.vim'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
-Plug 'airblade/vim-gitgutter'
-Plug 'jiangmiao/auto-pairs'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
+
+Plug 'Chiel92/vim-autoformat'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'airblade/vim-gitgutter'
+Plug 'altercation/vim-colors-solarized'
+Plug 'beloglazov/vim-textobj-quotes'      "object q, iq
+Plug 'bogado/file-line'
+Plug 'christoomey/vim-sort-motion'
+Plug 'christoomey/vim-system-copy'        "cp{motion}, cP, cv
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'edkolev/tmuxline.vim'
+Plug 'gabrielelana/vim-markdown'
+Plug 'haya14busa/vim-operator-flashy'
+Plug 'janko-m/vim-test'
+Plug 'jiangmiao/auto-pairs'
+Plug 'kana/vim-operator-user'
+Plug 'kana/vim-textobj-indent'            "object i, vai, vii
+Plug 'kana/vim-textobj-line'              "object l, il, al
+Plug 'kana/vim-textobj-user'
+Plug 'mhinz/vim-startify'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nelstrom/vim-textobj-rubyblock'     "objec ar, ir
+Plug 'neomake/neomake'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'qpkorr/vim-bufkill'
+Plug 'romainl/vim-qf'
 Plug 'roxma/nvim-completion-manager' " pip3 install --upgrade neovim
 Plug 'roxma/vim-hug-neovim-rpc' " required by nvim-completion-manager
-Plug 'kana/vim-operator-user'
-Plug 'haya14busa/vim-operator-flashy'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'gabrielelana/vim-markdown'
-Plug 'wikitopian/hardmode'
-Plug 'Chiel92/vim-autoformat'
-Plug 'bogado/file-line'
-Plug 'altercation/vim-colors-solarized'
-Plug 'janko-m/vim-test'
+Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdtree'
+Plug 'simeji/winresizer' " To enter resizing mode : ctrl+e, and exit by enter
+Plug 'terryma/vim-smooth-scroll'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tonekk/vim-binding-pry'
+Plug 'tpope/vim-commentary'               "gc{motion}, v_gc, {number}gcc
 Plug 'tpope/vim-dispatch'
-Plug 'romainl/vim-qf'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'                 "cs, ds, ys + {motion}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'neomake/neomake'
-Plug 'tonekk/vim-binding-pry'
-Plug 'qpkorr/vim-bufkill'
-Plug 'simeji/winresizer' " To enter resizing mode : ctrl+e, and exit by enter
-Plug 'mhinz/vim-startify'
-Plug 'terryma/vim-smooth-scroll'
-Plug 'edkolev/tmuxline.vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'junegunn/goyo.vim'
+Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'wikitopian/hardmode'
+
 call plug#end()
 
 " *********************************************
@@ -51,6 +59,7 @@ syntax on
 set updatetime=0                      " reduce updatetime to miliseconds - helpful for gitguter
 set numberwidth=4
 set number
+set relativenumber
 set showcmd
 set autoread
 set visualbell                        "Disable sound
@@ -60,8 +69,7 @@ set nopaste
 let mapleader=','                     "Remap leader to ','
 
 "Vim windows
-set fillchars+=vert:\|
-hi VertSplit guifg=fg guibg=bg gui=NONE
+" hi VertSplit guifg=fg guibg=bg gui=NONE
 
 "Indentation
 filetype plugin indent on
@@ -198,9 +206,9 @@ nnoremap <leader>F :Ag<Space>'<C-R><C-W>'
 vmap <leader>F y:Ag '<C-R>"'
 
 " About to execute FindReplace in normal mode
-nnoremap <leader>/ :call FindReplace('<C-R><C-W>','')
+nnoremap <leader>/ :call FindReplace('<C-R><C-W>','')<left><left>
 " About to execute FindReplace in visual mode
-vmap <leader>/ y:call FindReplace('<C-R>"','')
+vmap <leader>/ y:call FindReplace('<C-R>"','')<left><left>
 
 function! FindReplace(pattern,replace,...)
   let pattern = a:pattern
