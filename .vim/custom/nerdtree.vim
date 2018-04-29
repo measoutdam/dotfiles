@@ -1,5 +1,5 @@
 let g:NERDTreeWinSize=45
-let NERDTreeShowHidden=1            "Nerdtree is hidden by default
+let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 let NERDTreeStatusline = ""         "Nerdtree does not have to have statusline
 let NERDTreeIgnore = ['yarn-error.log', 'rspec_examples.txt', '\.swp$', '.DS_Store$', '\.ebextensions', '\.git$', '\.bundle', '.keep$']     "Nerdtree's ignore Files
@@ -21,7 +21,7 @@ highlight Directory guifg=#FF0000 ctermfg=73
 " Set nerdtree arrow to invisible
 let NERDTreeDirArrowExpandable = "\u00a0"
 let NERDTreeDirArrowCollapsible = "\u00a0"
-" Chang arrow
+" Chang arrows
 "let NERDTreeDirArrowExpandable = "▹"
 "let NERDTreeDirArrowCollapsible = "▿"
 

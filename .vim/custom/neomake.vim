@@ -1,9 +1,7 @@
-
 " Hide sign on sing column
 let g:neomake_place_signs=0
 
 " When writing a buffer (no delay).
-
 call neomake#configure#automake('w')
 
 " Run NeoMake on read and write operations
