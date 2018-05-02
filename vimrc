@@ -5,15 +5,12 @@ filetype off " *********************************************
 call plug#begin('~/.vim/plugged')
 
 Plug 'Chiel92/vim-autoformat'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'beloglazov/vim-textobj-quotes'      "object q, iq
-Plug 'bogado/file-line'
-Plug 'christoomey/vim-sort-motion'
+Plug 'christoomey/vim-sort-motion'        "gs{motions}
 Plug 'christoomey/vim-system-copy'        "cp{motion}, cP, cv
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'edkolev/tmuxline.vim'
 Plug 'gabrielelana/vim-markdown'
 Plug 'haya14busa/vim-operator-flashy'
 Plug 'janko-m/vim-test'
@@ -21,21 +18,19 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-indent'            "object i, vai, vii
 Plug 'kana/vim-textobj-line'              "object l, il, al
-Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-user'              "requires bt vim-textobj-quotes
 Plug 'mhinz/vim-startify'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'nelstrom/vim-textobj-rubyblock'     "objec ar, ir
+Plug 'nelstrom/vim-textobj-rubyblock'     "object ar, ir
 Plug 'neomake/neomake'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'qpkorr/vim-bufkill'
+Plug 'rizzatti/dash.vim'
 Plug 'romainl/vim-qf'
-Plug 'roxma/nvim-completion-manager' " pip3 install --upgrade neovim
-Plug 'roxma/vim-hug-neovim-rpc' " required by nvim-completion-manager
-Plug 'ryanoasis/vim-devicons'
+Plug 'roxma/nvim-completion-manager'        " pip3 install --upgrade neovim
+Plug 'roxma/vim-hug-neovim-rpc'                   " required by nvim-completion-manager
 Plug 'scrooloose/nerdtree'
-Plug 'simeji/winresizer' " To enter resizing mode : ctrl+e, and exit by enter
-Plug 'terryma/vim-smooth-scroll'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'simeji/winresizer'                  " To enter resizing mode : ctrl+e, and exit by enter
 Plug 'tonekk/vim-binding-pry'
 Plug 'tpope/vim-commentary'               "gc{motion}, v_gc, {number}gcc
 Plug 'tpope/vim-dispatch'
@@ -47,7 +42,13 @@ Plug 'tpope/vim-surround'                 "cs, ds, ys + {motion}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'wikitopian/hardmode'
+Plug 'stephpy/vim-yaml'
+
+" Disabled to solve performace issues
+" Plug 'itchyny/lightline.vim'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'ryanoasis/vim-devicons'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
 
@@ -61,15 +62,17 @@ set numberwidth=4
 set number
 set relativenumber
 set showcmd
-set autoread
 set visualbell                        "Disable sound
 set backspace=indent,eol,start        "Make backspace works like most program
-set noshowmode                        "Do not show mode
 set nopaste
+set laststatus=2                  "Show the status line all the time
+set t_Co=256
+let mapleader=','                     "Remap leader to ','
 let mapleader=','                     "Remap leader to ','
 
-"Vim windows
-" hi VertSplit guifg=fg guibg=bg gui=NONE
+"Auto load
+set autowrite
+set autoread
 
 "Indentation
 filetype plugin indent on
@@ -81,7 +84,6 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set expandtab
-set signcolumn=yes
 
 "Display tabs and trailing spaces visually
 set nowrap       "Don't wrap lines
@@ -97,18 +99,8 @@ set nowb
 set background=dark
 colorscheme solarized
 
-set laststatus=2                  "Show the status line all the time
-set t_Co=256
-
 ""Set color of '~' in End of Buffer to the same as background color
 highlight EndOfBuffer ctermfg=bg ctermbg=bg
-
-"Search
-set incsearch                     "Search: Find as you type search
-set hlsearch                      "Search: Highlight search terms
-set ignorecase                    "Search: Case-insensitive searching.
-set smartcase                     "Search: But case-sensitive if expression contains a capital letter.
-highlight IncSearch guibg=green ctermbg=green term=underline
 
 "Folding
 set foldnestmax=3                 "Folding: deepest fold is 3 levels
@@ -126,16 +118,16 @@ set ttyfast
 " tab character
 set list listchars=tab:\ \ ,trail:∙
 
-" *********************************************
-" *               Action Remapped             *
-" *********************************************
+"Search
+set incsearch                     "Search: Find as you type search
+set hlsearch                      "Search: Highlight search terms
+set ignorecase                    "Search: Case-insensitive searching.
+set smartcase                     "Search: But case-sensitive if expression contains a capital letter.
+highlight IncSearch guibg=green ctermbg=green term=underline
+
 " General Key mapping
-nnoremap <leader>w :w!<cr>
 nnoremap ; :
-map <leader>co :copen<CR>
-" Working with vimrc
-nnoremap <leader>so :so ~/.vimrc<cr>
-nnoremap <leader>ev :e ~/.vimrc<cr>
+nnoremap <Space> :noh<CR>
 
 " Easier navigation between split windows
 nnoremap <c-j> <c-w>j
@@ -144,40 +136,25 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
 " *********************************************
-" *                Text object                *
+" *                Text and Line              *
 " *********************************************
-" clear search result and whitespace
-nnoremap <Space> :noh \| :StripWhitespace<CR>
-
-" Inner Line selection
-nnoremap <leader>vil ^vg_
-nnoremap <leader>val 0v$g
-
-" replace current word with latest in reg
-nnoremap <leader>p viw"0p
-vmap <leader>p "0p
-
-" Delete without storing in register
-nnoremap <leader>d "_d
+" cleanup whitespace and save
+nnoremap <leader><CR> :StripWhitespace<CR> \| :w<CR>
 
 " Leave Terminal mode to Normal mode
-tnoremap <Esc> <C-\><C-n>
+tnoremap <C-i> <C-\><C-n>
 
 " indent/unindent visual mode selection with tab/shift+tab
 vmap <tab> >gv
 vmap <s-tab> <gv
-" *********************************************
-" *                Ruby helper                *
-" *********************************************
+" *                Code helper                *
 " Convert old hash to new Ruby 1.9 syntax
 map <leader>: :%s/:\(\w\+\)\(\s*=>\s*\)/\1: /gc<CR>
 
 " Convert ' to "
 map <leader>' :%s/'\([^']*\)'/"\1"/gc<CR>
 
-" *********************************************
 " *              Search helper                *
-" *********************************************
 " The Silver Searcher - using ag when available
 if executable('ag')
   " Use ag over grep
@@ -186,7 +163,7 @@ if executable('ag')
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-  " ag is fast enough that CtrlP doesn't need to cache
+  " As ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
 
@@ -207,6 +184,7 @@ vmap <leader>F y:Ag '<C-R>"'
 
 " About to execute FindReplace in normal mode
 nnoremap <leader>/ :call FindReplace('<C-R><C-W>','')<left><left>
+
 " About to execute FindReplace in visual mode
 vmap <leader>/ y:call FindReplace('<C-R>"','')<left><left>
 
@@ -218,41 +196,40 @@ function! FindReplace(pattern,replace,...)
   execute "cdo %s/".pattern."/".replace."/gc | update"
 endfunction
 
-" *********************************************
-" *       Toggles the quickfix window.        *
-" *********************************************
-let g:dispatch_quickfix_height = 17
-nmap <leader>q <Plug>(qf_qf_toggle)
+" *              ctrlp
+let g:ctrlp_map = '<leader>,'
 
-" *           Vim Operator Flashy             *
 
 " *                 Vim Test                  *
+nmap <silent> <leader>. :TestLast<CR>
+nmap <silent> <leader>A :TestSuite<CR>
 nmap <silent> <leader>R :TestFile -strategy=basic<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>g :TestVisit<CR>
 nmap <silent> <leader>r :TestNearest -strategy=basic<CR>
 nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>A :TestSuite<CR>
-nmap <silent> <leader>. :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+
 let test#ruby#rspec#executable = "./bin/rspec"
 let test#strategy = "dispatch"        "Use Dispatch strategy, Plugin 'tpope/vim-dispatch' us required
 
-" *               Smooth scroll               *
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-
+" *       quickfix window.        *
+let g:dispatch_quickfix_height = 17
+nmap <leader>q <Plug>(qf_qf_toggle)
 
 " *         Vim Completions Manager           *
 " When using tab to navigate the suggestions
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-
-source ~/.vim/custom/vim-operator-flashy.vim
 source ~/.vim/custom/ctrlp.vim
-source ~/.vim/custom/vim-airline.vim
-source ~/.vim/custom/vim-startify.vim
-source ~/.vim/custom/tmux-line.vim
-source ~/.vim/custom/vim-devicons.vim
 source ~/.vim/custom/nerdtree.vim
 source ~/.vim/custom/vim-indent-guides.vim
+source ~/.vim/custom/vim-operator-flashy.vim
+source ~/.vim/custom/vim-startify.vim
+source ~/.vim/custom/vim-airline.vim
+" source ~/.vim/custom/vim-devicons.vim
+
+" Other commands
+command! Vimrc e ~/.vimrc
+command! Sovimrc so ~/.vimrc
+

@@ -36,6 +36,7 @@
       "minimap"
       "atom-ide-ui"
       "rspec"
+      "vim-mode-plus"
     ]
     telemetryConsent: "limited"
     themes: [
@@ -47,6 +48,7 @@
   editor:
     confirmCheckoutHeadRevision: false
     fontFamily: "Operator mono"
+    fontSize: 17
     invisibles: {}
     lineHeight: 1.6
     preferredLineLength: 100

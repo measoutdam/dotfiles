@@ -6,11 +6,12 @@
 [alias]
   aa = add -A
   o = browse --
-  st = status 
+  st = status
+	s = status -s
   ci = commit
   cm = commit -m
-  pf = push --force-with-lease
   amend = commit -a --amend
+  amendf = commit -a --amend --no-edit
   br = branch
   bl = for-each-ref --count=30 --sort=-committerdate refs/heads/ --format='%(authordate:short) %(color:red)%(objectname:short) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) - (%(color:green)%(committerdate:relative)%(color:reset))'
   co = checkout
@@ -27,15 +28,15 @@
   lg = log --graph --decorate --pretty=oneline --abbrev-commit --all --color
   lga = log --all --graph --decorate --oneline --simplify-by-decoration
   lgp = log -p
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	adog = log --all --decorate --oneline --graph
+	glog = log --oneline --graph --abbrev-commit
   graph = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --all --date=short
   ls = ls-file
   ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags'"
+  pf = push --force-with-lease
   publish = "!git push -u origin \"$(git rev-parse --abbrev-ref HEAD)\""
   unpublish = "!git push origin :\"$(git rev-parse --abbrev-ref HEAD)\""
-	adog = log --all --decorate --oneline --graph
-	glog = log --oneline --graph
-	lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
-	s = status -s
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

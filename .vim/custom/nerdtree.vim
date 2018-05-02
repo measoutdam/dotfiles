@@ -16,18 +16,18 @@ let g:NERDTreeMapOpenSplit = 'sp'
 let g:NERDTreeMapOpenVSplit = 'vs'
 
 " Overring Directory color
-highlight Directory guifg=#FF0000 ctermfg=73
+highlight Directory ctermfg=37
 
 " Set nerdtree arrow to invisible
-let NERDTreeDirArrowExpandable = "\u00a0"
-let NERDTreeDirArrowCollapsible = "\u00a0"
+" let NERDTreeDirArrowExpandable = "\u00a0"
+" let NERDTreeDirArrowCollapsible = "\u00a0"
 " Chang arrows
-"let NERDTreeDirArrowExpandable = "▹"
-"let NERDTreeDirArrowCollapsible = "▿"
+let NERDTreeDirArrowExpandable = "▹"
+let NERDTreeDirArrowCollapsible = "▿"
 
 " Hide current working directory line.
-autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
+" autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
 
 " Hide slashes after each directory node.
-autocmd FileType nerdtree syntax match NERDTreeDirSlash #/$# conceal containedin=NERDTreeDir contained
+" autocmd FileType nerdtree syntax match NERDTreeDirSlash #/$# conceal containedin=NERDTreeDir contained
 
