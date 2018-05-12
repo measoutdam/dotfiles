@@ -19,7 +19,6 @@ Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-indent'            "object i, vai, vii
 Plug 'kana/vim-textobj-line'              "object l, il, al
 Plug 'kana/vim-textobj-user'              "requires bt vim-textobj-quotes
-Plug 'mhinz/vim-startify'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'nelstrom/vim-textobj-rubyblock'     "object ar, ir
 Plug 'neomake/neomake'
@@ -43,31 +42,32 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'stephpy/vim-yaml'
-
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+Plug 'wfleming/vim-codeclimate'
+Plug 'tpope/vim-haml'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'mhinz/vim-startify'
 " Disabled to solve performace issues
-" Plug 'itchyny/lightline.vim'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'ryanoasis/vim-devicons'
-" Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
-
 " *********************************************
 " *               General config              *
 " *********************************************
 "Basic
 syntax on
-set updatetime=0                      " reduce updatetime to miliseconds - helpful for gitguter
+set updatetime=50                     " reduce updatetime to miliseconds - helpful for gitguter
 set numberwidth=4
 set number
-set relativenumber
+" set relativenumber
 set showcmd
 set visualbell                        "Disable sound
 set backspace=indent,eol,start        "Make backspace works like most program
 set nopaste
 set laststatus=2                  "Show the status line all the time
 set t_Co=256
-let mapleader=','                     "Remap leader to ','
 let mapleader=','                     "Remap leader to ','
 
 "Auto load
@@ -112,8 +112,8 @@ autocmd InsertEnter,WinLeave * setlocal foldmethod=manual       "foldmethod must
 
 "Vim Faster
 let g:ruby_path = system('echo $HOME/.rbenv/shims')
-set lazyredraw
-set ttyfast
+" set lazyredraw
+" set ttyfast
 
 " tab character
 set list listchars=tab:\ \ ,trail:∙
@@ -124,7 +124,7 @@ set hlsearch                      "Search: Highlight search terms
 set ignorecase                    "Search: Case-insensitive searching.
 set smartcase                     "Search: But case-sensitive if expression contains a capital letter.
 highlight IncSearch guibg=green ctermbg=green term=underline
-
+set tags=./tags
 " General Key mapping
 nnoremap ; :
 nnoremap <Space> :noh<CR>
@@ -221,15 +221,18 @@ nmap <leader>q <Plug>(qf_qf_toggle)
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" *         tagbar
+nnoremap <silent> <Leader>? :TagbarToggle<CR>
+
 source ~/.vim/custom/ctrlp.vim
 source ~/.vim/custom/nerdtree.vim
 source ~/.vim/custom/vim-indent-guides.vim
 source ~/.vim/custom/vim-operator-flashy.vim
-source ~/.vim/custom/vim-startify.vim
 source ~/.vim/custom/vim-airline.vim
-" source ~/.vim/custom/vim-devicons.vim
+source ~/.vim/custom/neomake.vim
+source ~/.vim/custom/vim-startify.vim
 
-" Other commands
+" " Other commands
 command! Vimrc e ~/.vimrc
 command! Sovimrc so ~/.vimrc
 
