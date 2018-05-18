@@ -1,4 +1,4 @@
-let g:NERDTreeWinSize=45
+let g:NERDTreeWinSize=38
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 let NERDTreeStatusline = ""         "Nerdtree does not have to have statusline
@@ -14,15 +14,6 @@ let g:NERDTreeMapRefresh = 'r'
 let g:NERDTreeMapRefreshRoot = 'R'
 let g:NERDTreeMapOpenSplit = 'sp'
 let g:NERDTreeMapOpenVSplit = 'vs'
-" Overring Directory color
-highlight Directory ctermfg=37
-
-" Set nerdtree arrow to invisible
-" let NERDTreeDirArrowExpandable = "\u00a0"
-" let NERDTreeDirArrowCollapsible = "\u00a0"
-" Chang arrows
-let NERDTreeDirArrowExpandable = "▹"
-let NERDTreeDirArrowCollapsible = "▿"
 
 " Hide current working directory line.
 " autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal

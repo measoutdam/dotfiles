@@ -49,7 +49,7 @@ Plug 'tpope/vim-haml'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mhinz/vim-startify'
 " Disabled to solve performace issues
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
@@ -58,7 +58,7 @@ call plug#end()
 " *********************************************
 "Basic
 syntax on
-set updatetime=50                     " reduce updatetime to miliseconds - helpful for gitguter
+set updatetime=250                    " reduce updatetime to miliseconds - helpful for gitguter
 set numberwidth=4
 set number
 " set relativenumber
@@ -230,6 +230,7 @@ source ~/.vim/custom/vim-indent-guides.vim
 source ~/.vim/custom/vim-operator-flashy.vim
 source ~/.vim/custom/vim-airline.vim
 source ~/.vim/custom/neomake.vim
+" source ~/.vim/custom/vim-indent-guides.vim
 source ~/.vim/custom/vim-startify.vim
 
 " " Other commands

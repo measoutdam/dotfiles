@@ -1,3 +1,4 @@
+rsync ~/.irbrc $DOTFILES/irbrc --inplace
 rsync ~/.agignore $DOTFILES/agignore --inplace
 rsync ~/.vimrc $DOTFILES/vimrc --inplace
 rsync ~/.zshrc $DOTFILES/zshrc --inplace
