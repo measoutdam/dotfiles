@@ -47,6 +47,7 @@ Plug 'majutsushi/tagbar'
 Plug 'wfleming/vim-codeclimate'
 Plug 'tpope/vim-haml'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'mileszs/ack.vim'
 Plug 'mhinz/vim-startify'
 " Disabled to solve performace issues
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -58,7 +59,7 @@ call plug#end()
 " *********************************************
 "Basic
 syntax on
-set updatetime=250                    " reduce updatetime to miliseconds - helpful for gitguter
+set updatetime=100                    " reduce updatetime to miliseconds - helpful for gitguter
 set numberwidth=4
 set number
 " set relativenumber
@@ -93,7 +94,6 @@ set linebreak    "Wrap lines at convenient points
 set noswapfile
 set nobackup
 set nowb
-
 "Color Scheme and other UI
 "syntax enable
 set background=dark
@@ -134,7 +134,10 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-
+" Cursor shape
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 " *********************************************
 " *                Text and Line              *
 " *********************************************
@@ -153,52 +156,6 @@ map <leader>: :%s/:\(\w\+\)\(\s*=>\s*\)/\1: /gc<CR>
 
 " Convert ' to "
 map <leader>' :%s/'\([^']*\)'/"\1"/gc<CR>
-
-" *              Search helper                *
-" The Silver Searcher - using ag when available
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " As ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-" Bind :Ag to :grep! with arg required
-command! -nargs=+ -complete=file Ag silent! grep! <args>|cwindow|redraw!
-
-" Bind a to grep word under cursor
-nnoremap <leader>f :Ag "\b<C-R><C-W>\b"<CR>
-
-" Bind a to greg selected word - visual mode
-vmap <leader>f y:Ag '<C-R>"'<CR>
-
-" About to execuent Ag with current word as an argument
-nnoremap <leader>F :Ag<Space>'<C-R><C-W>'
-
-" About to execuent Ag with current visual selected word as an argument
-vmap <leader>F y:Ag '<C-R>"'
-
-" About to execute FindReplace in normal mode
-nnoremap <leader>/ :call FindReplace('<C-R><C-W>','')<left><left>
-
-" About to execute FindReplace in visual mode
-vmap <leader>/ y:call FindReplace('<C-R>"','')<left><left>
-
-function! FindReplace(pattern,replace,...)
-  let pattern = a:pattern
-  let replace = a:replace
-  let scope = a:0 >= 1 ? " -G ".a:1 : ""
-  execute "Ag '".pattern."'".scope
-  execute "cdo %s/".pattern."/".replace."/gc | update"
-endfunction
-
-" *              ctrlp
-let g:ctrlp_map = '<leader>,'
-
 
 " *                 Vim Test                  *
 nmap <silent> <leader>. :TestLast<CR>
@@ -224,16 +181,19 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " *         tagbar
 nnoremap <silent> <Leader>? :TagbarToggle<CR>
 
+source ~/.vim/custom/search-helper.vim
 source ~/.vim/custom/ctrlp.vim
 source ~/.vim/custom/nerdtree.vim
 source ~/.vim/custom/vim-indent-guides.vim
 source ~/.vim/custom/vim-operator-flashy.vim
 source ~/.vim/custom/vim-airline.vim
-source ~/.vim/custom/neomake.vim
-" source ~/.vim/custom/vim-indent-guides.vim
 source ~/.vim/custom/vim-startify.vim
+" source ~/.vim/custom/vim-devicons.vim
+if has("nvim")
+  source ~/.vim/custom/neomake.vim
+endif
 
-" " Other commands
+" * Other commands
 command! Vimrc e ~/.vimrc
 command! Sovimrc so ~/.vimrc
 

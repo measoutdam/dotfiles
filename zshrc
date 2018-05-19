@@ -4,18 +4,20 @@ export ZSH=/Users/measoutdam/.oh-my-zsh
 export ZSHRC=/Users/measoutdam/.zshrc
 export VIMRC=/Users/measoutdam/.vimrc
 export DOTFILES=~/Dropbox/Backups/dotfiles
-export TERM=xterm-256color
+export TERM=xterm-256color        # for common 256 color terminals (e.g. gnome-terminal)
+# export TERM=screen-256color       # for a tmux -2 session (also for screen)
 export OTP_ENCRYPTION_KEY=tf4hxybh4gp2bi737x4v7qvp4vt3jgax
 # Set name of the theme to load. Optionally, if you set this to "random"
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 plugins=(
   git
-  warhol
+  # directory color: https://github.com/unixorn/warhol.plugin.zsh
+  # warhol
 )
-
+eval `gdircolors ~/.oh-my-zsh/custom/plugins/dircolors-solarized/dircolors.ansi-dark`
 source $ZSH/oh-my-zsh.sh
-export EDITOR=nvim
+export EDITOR=vim
 export PATH="$(brew --prefix qt@5.5)/bin:$PATH"
 export PATH=$PATH:/Users/measoutdam/bin/
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"

@@ -27,3 +27,8 @@ let g:NERDTreeExactMatchHighlightColor['spec'] = s:rspec_red
 let g:NERDTreePatternMatchHighlightColor = {} " this line is needed to avoid error
 let g:NERDTreePatternMatchHighlightColor['spec/*'] = s:rspec_red " sets the color for files ending with _spec.rb
 
+" Hide current working directory line.
+autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
+
+" Hide slashes after each directory node.
+autocmd FileType nerdtree syntax match NERDTreeDirSlash #/$# conceal containedin=NERDTreeDir contained

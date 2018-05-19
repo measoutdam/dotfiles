@@ -1,11 +1,11 @@
 VIM_PATH='/usr/local/bin/vim'
 alias v=$VIM_PATH
 alias vi=$VIM_PATH
+alias vim=$VIM_PATH
 
+# NVIM_PATH='/Users/measoutdam/nvim-osx64/bin/nvim'
 NVIM_PATH='/usr/local/bin/nvim'
-if type nvim > /dev/null 2>&1; then
-  alias vim=$NVIM_PATH
-fi
+alias vim=$NVIM_PATH
 
 # ls, the common ones I use a lot shortened for rapid fire usage
 alias l='ls -lFh'     #size,show type,human readable

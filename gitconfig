@@ -1,10 +1,25 @@
 [color]
-	ui = true
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
+
+[color "status"]
+  added = green
+  changed = red bold
+  untracked = magenta bold
+
+[color "branch"]
+  remote = yellow
+
 [user]
 	name = Outdam Meas
 	email = mstdam@gmail.com
+
 [alias]
-  aa = add -A
+  aa = !git add -A && git status
   o = browse --
   st = status
 	s = status -s
@@ -18,6 +33,9 @@
   df = diff
   ds = diff --staged
   dc = diff --cached
+  dfw = diff --color-words
+  dsw = diff --staged --color-words
+  dcw = diff --cached --color-words
   pr = "!f() { ~/.dotfiles/bin/open-github-pr-page.sh; }; f"
   up = pull --rebase --prune
   wip = !git add -A && git commit -m "WIP"
@@ -37,10 +55,12 @@
   pf = push --force-with-lease
   publish = "!git push -u origin \"$(git rev-parse --abbrev-ref HEAD)\""
   unpublish = "!git push origin :\"$(git rev-parse --abbrev-ref HEAD)\""
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
 [core]
 	editor = vim

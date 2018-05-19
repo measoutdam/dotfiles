@@ -14,10 +14,3 @@ let g:NERDTreeMapRefresh = 'r'
 let g:NERDTreeMapRefreshRoot = 'R'
 let g:NERDTreeMapOpenSplit = 'sp'
 let g:NERDTreeMapOpenVSplit = 'vs'
-
-" Hide current working directory line.
-" autocmd FileType nerdtree syntax match NERDTreeHideCWD #^[</].*$# conceal
-
-" Hide slashes after each directory node.
-" autocmd FileType nerdtree syntax match NERDTreeDirSlash #/$# conceal containedin=NERDTreeDir contained
-

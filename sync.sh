@@ -17,7 +17,7 @@ rsync ~/.atom/packages.list $DOTFILES/atom/packages.list --inplace
 rsync ~/.atom/snippets.cson $DOTFILES/atom/snippets.cson --inplace
 rsync ~/.atom/styles.less $DOTFILES/atom/styles.less --inplace
 
-rsync -d ~/.vim/plugged/vim-devicons/plugin/webdevicons.vim $DOTFILES/.vim/plugged/vim-devicons/plugin/webdevicons.vim --inplace
+# rsync -d ~/.vim/plugged/vim-devicons/plugin/webdevicons.vim $DOTFILES/.vim/plugged/vim-devicons/plugin/webdevicons.vim --inplace
 rsync -d ~/.vim/plugged/vim-nerdtree-syntax-highlight/after/syntax/nerdtree.vim $DOTFILES/.vim/plugged/vim-nerdtree-syntax-highlight/after/syntax/nerdtree.vim --inplace
 
 rsync -r ~/.vim/custom/ $DOTFILES/.vim/custom/ --inplace
