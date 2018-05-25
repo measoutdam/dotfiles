@@ -49,6 +49,8 @@ Plug 'tpope/vim-haml'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mileszs/ack.vim'
 Plug 'mhinz/vim-startify'
+Plug 'wellle/targets.vim'
+
 " Disabled to solve performace issues
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'ryanoasis/vim-devicons'
@@ -62,6 +64,9 @@ syntax on
 set updatetime=100                    " reduce updatetime to miliseconds - helpful for gitguter
 set numberwidth=4
 set number
+set hid                               " solve problem of switch window
+source ~/.vim/syntax.vim
+
 " set relativenumber
 set showcmd
 set visualbell                        "Disable sound

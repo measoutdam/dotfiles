@@ -1,4 +1,4 @@
-session_root "~/Documents/code/core-bongloy"
+session_root "~/Documents/code/research/cbooking"
 
 if initialize_session "Bongloy"; then
 

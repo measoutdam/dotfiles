@@ -19,7 +19,9 @@ alias dup='$DOTFILES/sync.sh'
 alias so='source'
 
 alias zshrc='vim ~/.zshrc' # Quick access to the ~/.zshrc file
-alias vimrc='vim ~/.vimrc' # Quick access to the ~/.zshrc file
+alias vimrc='vim ~/.vimrc'
+alias gitignore='vim ~/.gitignore_global'
+alias gitconfig='vim ~/.gitconfig'
 
 alias grep='grep --color'
 

@@ -47,8 +47,8 @@
     template: "<%= projectName %><% if (relativeFilePath) { %>[<%= gitHead %>] -- <%= relativeFilePath %> <% } %>"
   editor:
     confirmCheckoutHeadRevision: false
-    fontFamily: "Operator mono"
-    fontSize: 18
+    fontFamily: "inconsolata "
+    fontSize: 17
     invisibles: {}
     lineHeight: 1.6
     preferredLineLength: 100

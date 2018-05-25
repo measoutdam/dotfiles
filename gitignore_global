@@ -94,7 +94,7 @@ dump.rdb
 .envrc
 .agignore
 Procfile.local
-
+.envrc
 # Version Control #
 ###################
 .git
@@ -106,3 +106,6 @@ Procfile.local
 *@neomake*
 
 # rails project #
+/tags*
+/*.log
+/'
