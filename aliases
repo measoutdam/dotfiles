@@ -31,3 +31,6 @@ alias -g G='| grep'
 alias -g H='| head'
 alias -g T='| tail'
 alias -g CP='| pbcopy'
+alias rspeclf='rspec --only-failures'
+
+# alias google-chrome='open -a Google\ Chrome --args --disable-web-security'

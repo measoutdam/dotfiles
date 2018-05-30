@@ -133,6 +133,9 @@ set tags=./tags
 " General Key mapping
 nnoremap ; :
 nnoremap <Space> :noh<CR>
+" Open current file in external app
+nmap <silent> <leader>c :exec 'silent !open -a "Google Chrome" % &'<CR>
+nmap <silent> <leader>a :exec 'silent !open -a "atom" % &'<CR>
 
 " Easier navigation between split windows
 nnoremap <c-j> <c-w>j
@@ -197,6 +200,8 @@ source ~/.vim/custom/vim-startify.vim
 if has("nvim")
   source ~/.vim/custom/neomake.vim
 endif
+" vim-haml
+autocmd FileType haml setlocal foldmethod=indent
 
 " * Other commands
 command! Vimrc e ~/.vimrc

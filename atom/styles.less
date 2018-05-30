@@ -1,5 +1,6 @@
 atom-workspace {
   font-family: "ubuntu mono";
+  --editor-line-height: 1.3;
 }
 // style UI elements inside atom-text-editor
 atom-text-editor {
@@ -35,7 +36,7 @@ atom-text-editor {
 }
 // style the background color of the tree view
 .tree-view {
-  font-size: 16px;
+  font-size: 15px;
 }
 // setting - search box
 .settings-view {
@@ -72,4 +73,12 @@ atom-panel.modal {
 
 .results-view-container {
   font-size: larger;
+}
+
+// Fuzzy Finding
+.select-list ol.list-group li .primary-line{
+  font-weight: bold;
+}
+.select-list ol.list-group li .secondary-line{
+  font-weight: normal;
 }

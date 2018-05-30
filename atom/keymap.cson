@@ -37,3 +37,5 @@
   'alt-r': 'linter-rubocop:fix-file',
 '.platform-darwin atom-workspace':
   'ctrl-.':'platformio-ide-terminal:toggle'
+'.platform-darwin':
+  'cmd-|': 'tree-view:reveal-active-file'
