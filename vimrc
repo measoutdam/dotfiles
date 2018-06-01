@@ -4,7 +4,10 @@ filetype off " *********************************************
 " *********************************************
 call plug#begin('~/.vim/plugged')
 
+Plug 'itchyny/lightline.vim'
+Plug 'KeitaNakamura/neodark.vim'
 Plug 'Chiel92/vim-autoformat'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'beloglazov/vim-textobj-quotes'      "object q, iq
@@ -19,10 +22,15 @@ Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-indent'            "object i, vai, vii
 Plug 'kana/vim-textobj-line'              "object l, il, al
 Plug 'kana/vim-textobj-user'              "requires bt vim-textobj-quotes
+" Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+Plug 'mhinz/vim-startify'
+Plug 'mileszs/ack.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'nelstrom/vim-textobj-rubyblock'     "object ar, ir
 Plug 'neomake/neomake'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'pangloss/vim-javascript'
 Plug 'qpkorr/vim-bufkill'
 Plug 'rizzatti/dash.vim'
 Plug 'romainl/vim-qf'
@@ -30,26 +38,22 @@ Plug 'roxma/nvim-completion-manager'        " pip3 install --upgrade neovim
 Plug 'roxma/vim-hug-neovim-rpc'                   " required by nvim-completion-manager
 Plug 'scrooloose/nerdtree'
 Plug 'simeji/winresizer'                  " To enter resizing mode : ctrl+e, and exit by enter
+Plug 'stephpy/vim-yaml'
+Plug 'tmhedberg/SimpylFold'
 Plug 'tonekk/vim-binding-pry'
 Plug 'tpope/vim-commentary'               "gc{motion}, v_gc, {number}gcc
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-haml'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'                 "cs, ds, ys + {motion}
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'stephpy/vim-yaml'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'majutsushi/tagbar'
-Plug 'wfleming/vim-codeclimate'
-Plug 'tpope/vim-haml'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'mileszs/ack.vim'
-Plug 'mhinz/vim-startify'
 Plug 'wellle/targets.vim'
+Plug 'wfleming/vim-codeclimate'
 
 " Disabled to solve performace issues
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -61,7 +65,7 @@ call plug#end()
 " *********************************************
 "Basic
 syntax on
-set updatetime=100                    " reduce updatetime to miliseconds - helpful for gitguter
+" set updatetime=100                    " reduce updatetime to miliseconds - helpful for gitguter
 set numberwidth=4
 set number
 set hid                               " solve problem of switch window
@@ -100,7 +104,7 @@ set noswapfile
 set nobackup
 set nowb
 "Color Scheme and other UI
-"syntax enable
+syntax enable
 set background=dark
 colorscheme solarized
 
@@ -120,8 +124,8 @@ let g:ruby_path = system('echo $HOME/.rbenv/shims')
 " set lazyredraw
 " set ttyfast
 
-" tab character
-set list listchars=tab:\ \ ,trail:∙
+"Set vert line to space and set tab/trail character
+set fillchars+=vert:\ |set list listchars=tab:\ \ ,trail:∙
 
 "Search
 set incsearch                     "Search: Find as you type search
@@ -146,6 +150,7 @@ nnoremap <c-l> <c-w>l
 let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
 let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+
 " *********************************************
 " *                Text and Line              *
 " *********************************************
@@ -194,8 +199,9 @@ source ~/.vim/custom/ctrlp.vim
 source ~/.vim/custom/nerdtree.vim
 source ~/.vim/custom/vim-indent-guides.vim
 source ~/.vim/custom/vim-operator-flashy.vim
-source ~/.vim/custom/vim-airline.vim
+" source ~/.vim/custom/vim-airline.vim
 source ~/.vim/custom/vim-startify.vim
+source ~/.vim/custom/vim-javascript.vim
 " source ~/.vim/custom/vim-devicons.vim
 if has("nvim")
   source ~/.vim/custom/neomake.vim
@@ -203,6 +209,67 @@ endif
 " vim-haml
 autocmd FileType haml setlocal foldmethod=indent
 
+" tmhedberg/SimpylFold
+let g:SimpylFold_docstring_preview = 1
+
+" Rubocop
+map <Alt-r> <leader>a
+
+" lightline
+" let g:lightline = {
+"       \ 'colorscheme': 'solarized',
+"       \ 'active': {
+"       \   'left': [
+"       \             ['mode', 'paste'],
+"       \             ['gitbranch', 'readonly', 'filename', 'modified']
+"       \           ],
+"       \   'right': [[ 'lineinfo' ], ['percent'], ['filetype'] ]
+"       \ },
+"       \ 'component_function': {
+"       \   'gitbranch': 'fugitive#head',
+" 			\ },
+"       \ }
+
+" let g:lightline = {
+"   \   'colorscheme': 'solarized',
+"   \   'active': {
+"   \     'left':[ [ 'mode', 'paste' ],
+"   \              [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+"   \     ]
+"   \   },
+" 	\   'component': {
+" 	\     'lineinfo': ' %3l:%-2v',
+" 	\   },
+"   \   'component_function': {
+"   \     'gitbranch': 'fugitive#head',
+"   \   }
+"   \ }
+" let g:lightline.separator = {
+" 	\   'left': '', 'right': ''
+"   \}
+" let g:lightline.subseparator = {
+" 	\   'left': '', 'right': '' 
+"   \}
+" Lightline
+let g:lightline = {
+\ 'colorscheme': 'solarized',
+\ 'active': {
+\   'left': [['mode', 'paste'],['gitbranch'], ['filename'], ['modified']],
+\   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+\ },
+\ 'component_function': {
+\   'gitbranch': 'fugitive#head',
+\   'modified': 'LightlineModified',
+\   'filename': 'LightlineFileName',
+\ },
+\ }
+function! LightlineModified()
+  return &modified ? '✚' : ''
+endfunction
+
+function! LightlineFileName()
+  return expand('%')
+endfunction
 " * Other commands
 command! Vimrc e ~/.vimrc
 command! Sovimrc so ~/.vimrc
