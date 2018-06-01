@@ -4,6 +4,7 @@ filetype off " *********************************************
 " *********************************************
 call plug#begin('~/.vim/plugged')
 
+Plug 'skywind3000/asyncrun.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'Chiel92/vim-autoformat'
@@ -71,6 +72,10 @@ set number
 set hid                               " solve problem of switch window
 source ~/.vim/syntax.vim
 
+"Auto load
+set autowrite
+set autoread
+
 " set relativenumber
 set showcmd
 set visualbell                        "Disable sound
@@ -80,9 +85,6 @@ set laststatus=2                  "Show the status line all the time
 set t_Co=256
 let mapleader=','                     "Remap leader to ','
 
-"Auto load
-set autowrite
-set autoread
 
 "Indentation
 filetype plugin indent on
@@ -213,43 +215,8 @@ autocmd FileType haml setlocal foldmethod=indent
 let g:SimpylFold_docstring_preview = 1
 
 " Rubocop
-map <Alt-r> <leader>a
+map <c-x> :!rubocop --auto-correct %<CR>
 
-" lightline
-" let g:lightline = {
-"       \ 'colorscheme': 'solarized',
-"       \ 'active': {
-"       \   'left': [
-"       \             ['mode', 'paste'],
-"       \             ['gitbranch', 'readonly', 'filename', 'modified']
-"       \           ],
-"       \   'right': [[ 'lineinfo' ], ['percent'], ['filetype'] ]
-"       \ },
-"       \ 'component_function': {
-"       \   'gitbranch': 'fugitive#head',
-" 			\ },
-"       \ }
-
-" let g:lightline = {
-"   \   'colorscheme': 'solarized',
-"   \   'active': {
-"   \     'left':[ [ 'mode', 'paste' ],
-"   \              [ 'gitbranch', 'readonly', 'filename', 'modified' ]
-"   \     ]
-"   \   },
-" 	\   'component': {
-" 	\     'lineinfo': ' %3l:%-2v',
-" 	\   },
-"   \   'component_function': {
-"   \     'gitbranch': 'fugitive#head',
-"   \   }
-"   \ }
-" let g:lightline.separator = {
-" 	\   'left': '', 'right': ''
-"   \}
-" let g:lightline.subseparator = {
-" 	\   'left': '', 'right': '' 
-"   \}
 " Lightline
 let g:lightline = {
 \ 'colorscheme': 'solarized',
