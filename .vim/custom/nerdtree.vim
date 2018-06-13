@@ -14,3 +14,16 @@ let g:NERDTreeMapRefresh = 'r'
 let g:NERDTreeMapRefreshRoot = 'R'
 let g:NERDTreeMapOpenSplit = 'sp'
 let g:NERDTreeMapOpenVSplit = 'sv'
+" Nerdtree git
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "\u25CF",
+    \ "Staged"    : "\U271A",
+    \ "Untracked" : "\uF128",
+    \ "Renamed"   : "\uf061",
+    \ "Unmerged"  : "\uE279",
+    \ "Deleted"   : "\uf00d",
+    \ "Dirty"     : "\uF00D",
+    \ "Clean"     : "\u2714",
+    \ 'Ignored'   : '⛌',
+    \ "Unknown"   : "?"
+    \ }

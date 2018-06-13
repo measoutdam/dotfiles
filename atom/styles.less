@@ -1,9 +1,9 @@
 atom-workspace {
-  font-family: "OperatorMono-Light";
+  font-family: "Inconsolata-Regular";
   --editor-line-height: 1.4;
-
 }
 // style UI elements inside atom-text-editor
+
 atom-text-editor {
   linter-message.info {
     background-color: rgb(202, 220, 228) !important;
@@ -24,6 +24,7 @@ atom-text-editor {
   }
 }
 // Indent guide plugin
+
 .indent-guide-improved {
   background-color: rgba(192,192,192,0.3);
 
@@ -36,10 +37,12 @@ atom-text-editor {
   }
 }
 // style the background color of the tree view
+
 .tree-view {
   font-size: 15px;
 }
 // setting - search box
+
 .settings-view {
   .packages .search-container .btn,
   .section atom-text-editor[mini] {
@@ -62,6 +65,16 @@ atom-panel.modal {
   border-bottom: solid 1px #003b4a;
 }
 
+.settings-view select.form-control {
+  border: solid 0.1px rgba(255, 255, 255, 0.2);
+}
+
+.control-label {
+  .setting-description.text.theme-description {
+    display: none;
+  }
+}
+
 .settings-view.pane-item,
 .tab-bar .tab .title {
   font-size: larger;
@@ -75,15 +88,15 @@ atom-panel.modal {
 .results-view-container {
   font-size: larger;
 }
-
 // Fuzzy Finding
-.select-list ol.list-group li .primary-line{
+.select-list ol.list-group li .primary-line {
   font-weight: bold;
 }
-.select-list ol.list-group li .secondary-line{
+
+.select-list ol.list-group li .secondary-line {
   font-weight: normal;
 }
 
 background-tips .background-message .message.fade-in {
-    opacity: 0.4;
+  opacity: 0.4;
 }

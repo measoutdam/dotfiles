@@ -23,9 +23,9 @@ Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-indent'            "object i, vai, vii
 Plug 'kana/vim-textobj-line'              "object l, il, al
 Plug 'kana/vim-textobj-user'              "requires bt vim-textobj-quotes
-" Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
-Plug 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'nelstrom/vim-textobj-rubyblock'     "object ar, ir
@@ -110,7 +110,7 @@ syntax enable
 set background=dark
 colorscheme solarized
 
-""Set color of '~' in End of Buffer to the same as background color
+""Set color for '~' in End of Buffer to the same as background color
 highlight EndOfBuffer ctermfg=bg ctermbg=bg
 
 "Folding
@@ -202,8 +202,9 @@ source ~/.vim/custom/nerdtree.vim
 source ~/.vim/custom/vim-indent-guides.vim
 source ~/.vim/custom/vim-operator-flashy.vim
 " source ~/.vim/custom/vim-airline.vim
-source ~/.vim/custom/vim-startify.vim
+" source ~/.vim/custom/vim-startify.vim
 source ~/.vim/custom/vim-javascript.vim
+source ~/.vim/custom/lightline.vim
 " source ~/.vim/custom/vim-devicons.vim
 if has("nvim")
   source ~/.vim/custom/neomake.vim
@@ -221,22 +222,21 @@ map <c-x> :!rubocop --auto-correct %<CR>
 let g:lightline = {
 \ 'colorscheme': 'solarized',
 \ 'active': {
-\   'left': [['mode', 'paste'],['gitbranch'], ['filename'], ['modified']],
+\   'left': [['mode', 'paste'],['gitbranch'], ['filename']],
 \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
 \ },
 \ 'component_function': {
 \   'gitbranch': 'fugitive#head',
-\   'modified': 'LightlineModified',
 \   'filename': 'LightlineFileName',
 \ },
 \ }
-function! LightlineModified()
-  return &modified ? '✚' : ''
-endfunction
 
 function! LightlineFileName()
-  return expand('%')
+  let filename = expand('%') !=# '' ? expand('%') : '[No Name]'
+  let modified = &modified ? " " : ''
+  return filename . modified
 endfunction
+
 " * Other commands
 command! Vimrc e ~/.vimrc
 command! Sovimrc so ~/.vimrc

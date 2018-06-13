@@ -8,6 +8,9 @@
     use: {}
   "autocomplete-plus":
     confirmCompletion: "tab always, enter when suggestion explicitly selected"
+  "autocomplete-ruby":
+    rsensePath: "/Users/measoutdam/.rbenv/shims/rsense"
+    suggestionPriority: true
   "block-cursor":
     global:
       blinkOff:
@@ -37,12 +40,12 @@
       "linter-scss-lint"
       "minimap"
       "atom-ide-ui"
-      "whitespace"
       "indent-guide-improved"
-      "rspec"
       "symbols-view"
       "pigments"
       "github"
+      "vim-mode-plus"
+      "linter-codeclimate"
     ]
     telemetryConsent: "limited"
     themes: [
@@ -53,9 +56,10 @@
     template: "<%= projectName %><% if (relativeFilePath) { %>[<%= gitHead %>] -- <%= relativeFilePath %> <% } %>"
   editor:
     confirmCheckoutHeadRevision: false
-    fontFamily: "OperatorMono-Light"
-    fontSize: 15
+    fontFamily: "Inconsolata-Regular"
+    fontSize: 17
     invisibles: {}
+    lineHeight: 1.4
     preferredLineLength: 100
     scrollPastEnd: true
     showIndentGuide: true
@@ -74,6 +78,7 @@
     fontScale: 1
   "goto-definition":
     performanceMode: true
+  "linter-codeclimate": {}
   "linter-haml":
     executablePath: "/Users/measoutdam/.rbenv/shims/haml-lint"
   "linter-rubocop":

@@ -53,6 +53,7 @@
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	adog = log --all --decorate --oneline --graph
 	glog = log --oneline --graph --abbrev-commit
+  ll = "!git --no-pager glog -25"
   graph = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --all --date=short
   ls = ls-file
   ctags = "!sh -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags'"
